@@ -1,6 +1,6 @@
 <?php
     require_once("../php/connection.php");
-    require_once ("../controller/ControllerPaciente.php");
+    require_once("../controller/ControllerMedico.php");
     $tipo_consulta = $_POST['tipo_operacion'];
     switch ($tipo_consulta) {
         case 'guardar':
@@ -9,16 +9,20 @@
             $Apellidos          = $_POST['Apellidos'];
             $Sexo               = $_POST['Sexo'];
             $Fecha_nacimiento   = $_POST['Fecha_nacimiento'];
+            $Fecha_contratacion = $_POST['Fecha_contratacion'];
             $Direccion          = $_POST['Direccion'];
             $Telefono           = $_POST['Telefono'];
             $Email              = $_POST['Email'];
-            $consultas  = new paciente();
-            $ejecutar = $consultas->set_registro(strtoupper($CURP), $Nombre, $Apellidos, $Sexo, $Fecha_nacimiento, $Direccion, $Telefono, $Email);
+            $Password           = $_POST['Password'];
+            $Especialidad       = $_POST['Especialidad'];
+            $Cedula             = $_POST['Cedula'];
+            $consultas = new medico();
+            $ejecutar = $consultas->set_registro(strtoupper($CURP), $Nombre, $Apellidos, $Sexo, $Fecha_nacimiento, $Direccion, $Telefono, $Email, $Fecha_contratacion, $Password, $Especialidad, $Cedula);
             echo json_encode($ejecutar);
-        break;
+            break;
         case 'editar':
             $ID = $_POST['id'];
-            $consultas = new paciente();
+            $consultas = new medico();
             $ejecutar = $consultas->search_editar_registro($ID);
             echo json_encode($ejecutar);
             break;
@@ -28,22 +32,25 @@
             $Apellidos          = $_POST['Apellidos'];
             $Sexo               = $_POST['Sexo'];
             $Fecha_nacimiento   = $_POST['Fecha_nacimiento'];
+            $Fecha_contratacion = $_POST['Fecha_contratacion'];
             $Direccion          = $_POST['Direccion'];
             $Telefono           = $_POST['Telefono'];
             $Email              = $_POST['Email'];
-            $consultas = new paciente();
-            $ejecutar = $consultas->modificar_registro($ID, $Nombre, $Apellidos, $Sexo, $Fecha_nacimiento, $Direccion, $Telefono, $Email);
+            $Especialidad       = $_POST['Especialidad'];
+            $Cedula             = $_POST['Cedula'];
+            $consultas = new medico();
+            $ejecutar = $consultas->modificar_registro($ID, $Nombre, $Apellidos, $Sexo, $Fecha_nacimiento, $Direccion, $Telefono, $Email, $Fecha_contratacion, $Especialidad, $Cedula);
             echo json_encode($ejecutar);
             break;
         case 'eliminar':
             $ID = $_POST['id'];
-            $consultas = new paciente();
+            $consultas = new medico();
             $ejecutar = $consultas->eliminar_registro($ID);
             echo json_encode($ejecutar);
             break;
         case 'buscar':
-            $Nombre = $_POST['nombre_paciente'];
-            $consultas = new paciente();
+            $Nombre = $_POST['nombre_medico'];
+            $consultas = new medico();
             $ejecutar = $consultas->search_registro($Nombre);
             echo json_encode($ejecutar);
             break;

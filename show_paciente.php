@@ -1,13 +1,17 @@
 <?php
     require_once("php/connection.php");
+    require_once("controller/ControllerPaciente.php");
     session_start();
     if(!isset($_SESSION['rol'])) {
         header('Location: index.php');
     } else {
-        if ($_SESSION['rol'] != 1) {
+        if ($_SESSION['rol'] != 2) {
         header('Location: index.php');
         }
     }
+
+    $paciente = new paciente();
+    $mostrar_datos = $paciente->select_paciente();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +19,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrador | Buscar recepcionista</title>
+    <title>Recepcionista | Mostrar pacientes</title>
 
     <!-- Fuentes de tipografia -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,7 +67,7 @@
     <header>
         <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="menu_admin.php">
+                <a class="navbar-brand" href="menu_recepcionista.php">
                     <img src="resource/img/favicon.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
                     Medical Control System
                 </a>
@@ -77,28 +81,28 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Recepcionista
+                                Pacientes
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="form_recepcionista.php">Nuevo recepcionista</a></li>
+                                <li><a class="dropdown-item" href="form_paciente.php">Nuevo paciente</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item active" href="search_recepcionista.php">Búsqueda recepcionista</a></li>
-                                <li><a class="dropdown-item" href="show_recepcionista.php">Mostrar lista recepcionista</a></li>
+                                <li><a class="dropdown-item" href="search_paciente.php">Búsqueda pacientes</a></li>
+                                <li><a class="dropdown-item active" href="show_paciente.php">Mostrar lista pacientes</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Médico
+                                Citas
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="form_medico.php">Nuevo médico</a></li>
+                                <li><a class="dropdown-item" href="form_cita.php">Nueva cita medica</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="search_medico.php">Búsqueda médicos</a></li>
-                                <li><a class="dropdown-item" href="show_medico.php">Mostrar lista médicos</a></li>
+                                <li><a class="dropdown-item" href="search_cita.php">Búsqueda citas</a></li>
+                                <li><a class="dropdown-item" href="show_cita.php">Mostrar lista citas</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -108,59 +112,68 @@
                 </div>
             </div>
         </nav>
-        <div class="cover d-flex justify-content-end align-items-start p-5 flex-column" style="background-image: url(resource/img/img-9.jpg);">
-            <h1>Buscar recepcionistas</h1>
-            <p>El mejor trabajo del mundo.</p>
-            <form action="form_recepcionista.php">
+        <div class="cover d-flex justify-content-end align-items-start p-5 flex-column" style="background-image: url(resource/img/img-6.jpg);">
+            <h1>Mostrar pacientes</h1>
+            <p>La mejor atención medica.</p>
+            <form action="form_paciente.php">
                 <button type="submit" class="btn btn-info"> Agregar</button>
             </form>
         </div>
     </header>
 
-    <!-- Page container -->
+    <!-- Page Content -->
     <section>
         <div class="container mt-5 mb-5">
-            <div class="d-flex bd-highlight mb-3">
-                <div class="ms-auto p-2 bd-highlight">
-                    <form class="d-flex" id="busqueda">
-                        <input class="form-control me-2" type="search" name="nombre_recepcionista" aria-label="Search" placeholder="Buscar" autocomplete="off">
-                        <button class="btn btn-primary" name="enviar" type="submit">
-                            <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-            <div id="mensajes"></div>  
-            <div class="table-responsive">
+            <?php
+             if ($mostrar_datos) {
+            ?>
+             <div class="table-responsive">
                 <table class="table table-striped table-hover text-center">
                     <thead class="table-dark">
-                        <tr>
                         <th scope="col"><h5>Núm.</h5></th>
                         <th scope="col"><h5>CURP</h5></th>
                         <th scope="col"><h5>Nombre</h5></th>
-                        <th scope="col"><h5>Correo electrónico</h5></th>
-                        <th scope="col"><h5>Fecha de contratación</h5></th>
+                        <th scope="col"><h5>Sexo</h5></th>
+                        <th scope="col"><h5>Fecha de nacimiento</h5></th>
                         <th></th>
                         <th></th>
-                        </tr>
                     </thead>
-                    <tbody id="tabla-recepcionista">
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                    <tbody id="tabla-paciente">
+                        <?php
+                        foreach ($mostrar_datos as $row) {
+                            $ID = $row['ID'];
+                        ?>
+                            <tr>
+                                <th scope="row"><?php echo $ID; ?></th>
+                                <td><?php echo $row['CURP']; ?></td>
+                                <td><?php echo $row['Nombre']." ".$row['Apellidos']; ?></td>
+                                <td><?php echo $row['Sexo']; ?></td>
+                                <td><?php echo $row['Fecha_nacimiento']; ?></td>
+                                <td><?php echo "<button class='btn btn-info btn-sm' onclick='editar($ID);'><i class='fa-solid fa-pen-to-square sizeSimbol'></i></button>" ?></td>
+                                <td><?php echo "<button class='btn btn-danger btn-sm' onclick='eliminar($ID);'><i class='fa-solid fa-delete-left sizeSimbol'></i></button>" ?></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
                     </tbody>
                 </table>
-            </div>
+             </div>
+            <?php  
+             } else {
+            ?>
+                <div class="alert alert-primary d-flex align-items-center" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+                    <div>
+                    No se encuentran pacientes registrados en la base de datos.
+                    </div>
+                </div>
+            <?php
+             }
+            ?>
         </div>
     </section>
-    
-      <!-- Footer -->
+
+    <!-- Footer -->
     <div class="container-fluid color-footer-g">
         <div class="container">
             <footer class="pt-5 pb-1">
@@ -225,7 +238,7 @@
 
     <!-- Funciones paciente y alerta -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="js/funRecepcionista2.js"></script>
+    <script src="js/funPaciente2.js"></script>
     <!-- Bootstrap JS JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>

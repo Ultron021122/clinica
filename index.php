@@ -88,11 +88,11 @@
               <input type="text" name="tipo_operacion" value="iniciar" hidden>
               <div class="mb-4">
                 <label for="Username" class="form-label font-weight-bold">Nombre usuario</label>
-                <input type="text" class="form-control bg-dark-x border-0" id="Username" name="Username" placeholder="Ingresa tu usuario" aria-describedby="usuarioHelp" required>
+                <input type="text" class="form-control bg-dark-x border-0" id="Username" name="Username" placeholder="Ingresa tu usuario" aria-describedby="usuarioHelp" autocomplete="off" required>
               </div>
               <div class="mb-4">
                 <label for="password" class="form-label font-weight-bold">Contraseña</label>
-                <input type="password" class="form-control bg-dark-x border-0 mb-2" name="Password" placeholder="Ingresa tu contraseña" id="password" required>
+                <input type="password" class="form-control bg-dark-x border-0 mb-2" name="Password" placeholder="Ingresa tu contraseña" id="password" autocomplete="off" required>
                 <a href="#" id="emailHelp" class="form-text text-muted text-decoration-none">¿Has olvidado tu contraseña?</a>
               </div>
               <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>

@@ -1,5 +1,6 @@
 <?php
     require_once("php/connection.php");
+    require_once("controller/ControllerMedico.php");
     session_start();
     if(!isset($_SESSION['rol'])) {
         header('Location: index.php');
@@ -8,6 +9,9 @@
         header('Location: index.php');
         }
     }
+
+    $medico = new medico();
+    $mostrar_datos = $medico->select_medico();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +19,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrador | Buscar recepcionista</title>
+    <title>Administrador | Mostrar medicos</title>
 
     <!-- Fuentes de tipografia -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -84,7 +88,7 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item active" href="search_recepcionista.php">Búsqueda recepcionista</a></li>
+                                <li><a class="dropdown-item" href="search_recepcionista.php">Búsqueda recepcionista</a></li>
                                 <li><a class="dropdown-item" href="show_recepcionista.php">Mostrar lista recepcionista</a></li>
                             </ul>
                         </li>
@@ -98,7 +102,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li><a class="dropdown-item" href="search_medico.php">Búsqueda médicos</a></li>
-                                <li><a class="dropdown-item" href="show_medico.php">Mostrar lista médicos</a></li>
+                                <li><a class="dropdown-item active" href="show_medico.php">Mostrar lista médicos</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -108,10 +112,10 @@
                 </div>
             </div>
         </nav>
-        <div class="cover d-flex justify-content-end align-items-start p-5 flex-column" style="background-image: url(resource/img/img-9.jpg);">
-            <h1>Buscar recepcionistas</h1>
+        <div class="cover d-flex justify-content-end align-items-start p-5 flex-column" style="background-image: url(resource/img/img-8.jpg);">
+            <h1>Mostrar medicos</h1>
             <p>El mejor trabajo del mundo.</p>
-            <form action="form_recepcionista.php">
+            <form action="form_medico.php">
                 <button type="submit" class="btn btn-info"> Agregar</button>
             </form>
         </div>
@@ -120,43 +124,55 @@
     <!-- Page container -->
     <section>
         <div class="container mt-5 mb-5">
-            <div class="d-flex bd-highlight mb-3">
-                <div class="ms-auto p-2 bd-highlight">
-                    <form class="d-flex" id="busqueda">
-                        <input class="form-control me-2" type="search" name="nombre_recepcionista" aria-label="Search" placeholder="Buscar" autocomplete="off">
-                        <button class="btn btn-primary" name="enviar" type="submit">
-                            <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-            <div id="mensajes"></div>  
+          <?php
+            if($mostrar_datos){
+          ?>
             <div class="table-responsive">
                 <table class="table table-striped table-hover text-center">
-                    <thead class="table-dark">
+                  <thead class="table-dark">
+                    <tr>
+                      <th scope="col"><h5>Núm.</h5></th>
+                      <th scope="col"><h5>CURP</h5></th>
+                      <th scope="col"><h5>Nombre</h5></th>
+                      <th scope="col"><h5>Especialidad</h5></th>
+                      <th scope="col"><h5>Fecha de contratación</h5></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabla-medico">
+                    <?php
+                      foreach ($mostrar_datos as $row) {
+                        $ID = $row['ID'];
+                        $ID_user = $row['ID_user'];
+                    ?>
                         <tr>
-                        <th scope="col"><h5>Núm.</h5></th>
-                        <th scope="col"><h5>CURP</h5></th>
-                        <th scope="col"><h5>Nombre</h5></th>
-                        <th scope="col"><h5>Correo electrónico</h5></th>
-                        <th scope="col"><h5>Fecha de contratación</h5></th>
-                        <th></th>
-                        <th></th>
+                          <th scope="row"><?php echo $ID; ?></th>
+                          <td><?php echo $row['CURP']; ?></td>
+                          <td><?php echo $row['Nombre']." ".$row['Apellidos']; ?></td>
+                          <td><?php echo $row['Especialidad']; ?></td>
+                          <td><?php echo $row['Fecha_contratacion']; ?></td>
+                          <td><?php echo "<button class='btn btn-info btn-sm' onclick='editar($ID);'><i class='fa-solid fa-pen-to-square sizeSimbol'></i></button>" ?></td>
+                          <td><?php echo "<button class='btn btn-danger btn-sm' onclick='eliminar($ID_user);'><i class='fa-solid fa-delete-left sizeSimbol'></i></button>" ?></td>
                         </tr>
-                    </thead>
-                    <tbody id="tabla-recepcionista">
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
+                    <?php
+                      }
+                    ?>
+                  </tbody>
                 </table>
-            </div>
+              </div>
+          <?php
+            } else {
+          ?>
+              <div class="alert alert-primary d-flex align-items-center" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+                <div>
+                  No se encuentran médicos registrados en la base de datos.
+                </div>
+              </div>
+          <?php
+            }
+          ?>
         </div>
     </section>
     
@@ -225,7 +241,7 @@
 
     <!-- Funciones paciente y alerta -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="js/funRecepcionista2.js"></script>
+    <script src="js/funMedico2.js"></script>
     <!-- Bootstrap JS JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>

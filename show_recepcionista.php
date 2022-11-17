@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="css/styleMain.css">
     <style>
       .sizeSimbol {
-        font-size: 24px;
+        font-size: 18px;
       }
     </style>
 </head>
@@ -127,8 +127,8 @@
           <?php
             if($mostrar_datos){
           ?>
-              <div class="table-responsive" id="tabla-recepcionista">
-                <table class="table table-striped table-hover table-light text-center">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover text-center">
                   <thead class="table-dark">
                     <tr>
                       <th scope="col"><h5>Núm.</h5></th>
@@ -140,7 +140,7 @@
                       <th></th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="tabla-recepcionista">
                     <?php
                       foreach ($mostrar_datos as $row) {
                         $ID = $row['ID'];
@@ -167,16 +167,16 @@
               <div class="alert alert-primary d-flex align-items-center" role="alert">
                 <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
                 <div>
-                  No se encuentran médicos registrados en la base de datos.
+                  No se encuentran recepcionistas registrados en la base de datos.
                 </div>
               </div>
           <?php
             }
           ?>
         </div>
-      </section>
-
-    <!-- Footer -->
+    </section>
+    
+      <!-- Footer -->
     <div class="container-fluid color-footer-g">
         <div class="container">
             <footer class="pt-5 pb-1">

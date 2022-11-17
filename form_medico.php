@@ -8,6 +8,20 @@
         header('Location: index.php');
         }
     }
+    $array = array(
+        "Masculino", "Femenino"
+    );
+    $especialidad = array(
+        "Anestesiología", "Anatomía Patológica",
+        "Cardiología", "Dermatología",
+        "Gastroenterología", "Ginegología",
+        "Hematología", "Infectología",
+        "Nefrología", "Neurología",
+        "Neumología", "Oftalmología",
+        "Ortopedia", "Otorrinolaringología",
+        "Pediátria", "Psiquiatría",
+        "Urología"
+    );
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +29,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrador | Buscar recepcionista</title>
+    <title>Administrador | Nuevo recepcionista</title>
 
     <!-- Fuentes de tipografia -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,11 +44,6 @@
     <!-- AOS CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styleMain.css">
-    <style>
-      .sizeSimbol {
-        font-size: 18px;
-      }
-    </style>
 </head>
 <body>
     <!-- SVG -->
@@ -84,7 +93,7 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item active" href="search_recepcionista.php">Búsqueda recepcionista</a></li>
+                                <li><a class="dropdown-item" href="search_recepcionista.php">Búsqueda recepcionista</a></li>
                                 <li><a class="dropdown-item" href="show_recepcionista.php">Mostrar lista recepcionista</a></li>
                             </ul>
                         </li>
@@ -93,7 +102,7 @@
                                 Médico
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="form_medico.php">Nuevo médico</a></li>
+                                <li><a class="dropdown-item active" href="form_medico.php">Nuevo médico</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
@@ -108,59 +117,124 @@
                 </div>
             </div>
         </nav>
-        <div class="cover d-flex justify-content-end align-items-start p-5 flex-column" style="background-image: url(resource/img/img-9.jpg);">
-            <h1>Buscar recepcionistas</h1>
-            <p>El mejor trabajo del mundo.</p>
-            <form action="form_recepcionista.php">
-                <button type="submit" class="btn btn-info"> Agregar</button>
+        <div class="cover d-flex justify-content-end align-items-start p-5 flex-column" style="background-image: url(resource/img/img-6.jpg);">
+            <h1>Agregar medico</h1>
+            <p>El mejor trabajo de la vida.</p>
+            <form action="search_medico.php">
+                <button type="submit" class="btn btn-info"> Consultas</button>
             </form>
         </div>
     </header>
 
-    <!-- Page container -->
-    <section>
-        <div class="container mt-5 mb-5">
-            <div class="d-flex bd-highlight mb-3">
-                <div class="ms-auto p-2 bd-highlight">
-                    <form class="d-flex" id="busqueda">
-                        <input class="form-control me-2" type="search" name="nombre_recepcionista" aria-label="Search" placeholder="Buscar" autocomplete="off">
-                        <button class="btn btn-primary" name="enviar" type="submit">
-                            <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-            <div id="mensajes"></div>  
-            <div class="table-responsive">
-                <table class="table table-striped table-hover text-center">
-                    <thead class="table-dark">
-                        <tr>
-                        <th scope="col"><h5>Núm.</h5></th>
-                        <th scope="col"><h5>CURP</h5></th>
-                        <th scope="col"><h5>Nombre</h5></th>
-                        <th scope="col"><h5>Correo electrónico</h5></th>
-                        <th scope="col"><h5>Fecha de contratación</h5></th>
-                        <th></th>
-                        <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabla-recepcionista">
-                        <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
+    <!-- Page Content -->
+    <section class="container mt-5 mb-5">
+        <div class="row g-5 justify-content-center">
+            <div class="col-12 col-md-10 col-lg-10 px-5 pt-5 pb-3" style="background-color: #D6DBDF;">
+                <h4 class="mb-3">Datos personales.</h4>
+                <form action="" id="form">
+                    <div class="row g-3">
+                        <input type="text" name="tipo_operacion" value="guardar" hidden>
+                        <!-- Nombre -->
+                        <div class="col-sm-5">
+                            <label for="Nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="Nombre" name="Nombre">
+                        </div>
+                        <!-- Apellidos -->
+                        <div class="col-sm-7">
+                            <label for="Apellidos" class="form-label">Apellidos</label>
+                            <input type="text" class="form-control" id="Apellidos" name="Apellidos">
+                        </div>
+                        <!-- CURP -->
+                        <div class="col-md-7">
+                            <label for="Curp" class="form-label">CURP</label>
+                            <input type="text" maxlength="18" minlength="18" style="text-transform: uppercase;" class="form-control" id="Curp" name="Curp">
+                            <div id="Curp" class="form-text">Clave única de registro de población.</div>
+                        </div>
+                        <!-- Password -->
+                        <div class="col-md-5">
+                            <label for="Password" class="form-label">Contraseña</label>
+                            <input type="password" maxlength="15" class="form-control" id="Password" name="Password">
+                            <div id="Password" class="form-text">Establece una contraseña segura.</div>
+                        </div>
+                        <!-- Sexo -->
+                        <div class="col-md-4">
+                            <label for="Sexo" class="form-label">Sexo</label>
+                            <select class="form-select" id="Sexo" name="Sexo">
+                                <option value="" class="text-center form-text" selected>Elige una opción</option>
+                                <?php
+                                    foreach ($array as $row) {
+                                ?>
+                                        <option value="<?php echo $row; ?>" ><?php echo $row; ?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <!-- Fecha de nacimiento -->
+                        <div class="col-md-4">
+                            <label for="Fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
+                            <input type="date" class="form-control" id="Fecha_nacimiento" name="Fecha_nacimiento">
+                        </div>
+                        <!-- Fecha de contratación -->
+                        <div class="col-md-4">
+                            <label for="Fecha_contratacion" class="form-label">Fecha de contratación</label>
+                            <input type="date" class="form-control" id="Fecha_contratacion" name="Fecha_contratacion">
+                        </div>
+                        <!-- Especialidad -->
+                        <div class="col-6">
+                            <label for="Especialidad" class="form-label">Especialidad</label>
+                            <select class="form-select" id="Especialidad" name="Especialidad">
+                                <option value="" class="text-center form-text" selected>Elige una opción</option>
+                                <?php
+                                    foreach ($especialidad as $row) {
+                                ?>
+                                        <option value="<?php echo $row; ?>" ><?php echo $row; ?></option>
+                                <?php
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <!-- Cédula medica -->
+                        <div class="col-6">
+                            <label for="Cedula" class="form-label">Cédula medica</label>
+                            <input type="text" maxlength="15" name="Cedula" id="Cedula" class="form-control">
+                        </div>
+                        <hr class="my-4">
+                        <h4 class="mb-3">Datos de contacto.</h4>
+                        <!-- Email -->
+                        <div class="col-lg-8">
+                            <label for="Email" class="form-label">Correo electrónico</label>
+                            <div class="input-group">
+                                <span class="input-group-text">@</span>
+                                <input type="email" class="form-control" id="Email" name="Email" placeholder="example@gmai.com">
+                            </div>
+                        </div>
+                        <!-- Teléfono -->
+                        <div class="col-lg-4">
+                            <label for="Telefono" class="form-label">Teléfono</label>
+                            <div class="input-group">
+                                <span class="input-group-text">Núm.</span>
+                                <input type="tel" max="12" class="form-control" id="Telefono" name="Telefono">
+                            </div>
+                        </div>
+                        <!-- Dirección -->
+                        <div class="col-12">
+                            <label for="Direccion" class="form-label">Dirección</label>
+                            <input type="text" name="Direccion" id="Direccion" class="form-control">
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    <div class="d-flex">
+                        <button class="w-50 btn btn-success mb-4 me-1" type="submit">Agregar</button>
+                        <button class="w-50 btn btn-danger mb-4" type="reset">Cancelar</button>
+                    </div>
+                </form>
+                <div id="mensajes"></div>   
             </div>
         </div>
     </section>
-    
-      <!-- Footer -->
+
+    <!-- Footer -->
     <div class="container-fluid color-footer-g">
         <div class="container">
             <footer class="pt-5 pb-1">
@@ -225,7 +299,7 @@
 
     <!-- Funciones paciente y alerta -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="js/funRecepcionista2.js"></script>
+    <script src="js/funMedico.js"></script>
     <!-- Bootstrap JS JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>

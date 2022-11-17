@@ -59,6 +59,12 @@ h1, h2, h3, h4, h5 {
     display: flex;
 }
 
+/* icono warning color */
+.swal2-icon.swal2-warning.swal2-icon-show {
+    border-color: #d33;
+    color: #d33;
+}
+
 .stripe-container .card {
     width: 360px;
     flex-shrink: 0;

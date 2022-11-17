@@ -84,7 +84,7 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item active" href="search_recepcionista.php">Búsqueda recepcionista</a></li>
+                                <li><a class="dropdown-item" href="search_recepcionista.php">Búsqueda recepcionista</a></li>
                                 <li><a class="dropdown-item" href="show_recepcionista.php">Mostrar lista recepcionista</a></li>
                             </ul>
                         </li>
@@ -97,7 +97,7 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="search_medico.php">Búsqueda médicos</a></li>
+                                <li><a class="dropdown-item active" href="search_medico.php">Búsqueda médicos</a></li>
                                 <li><a class="dropdown-item" href="show_medico.php">Mostrar lista médicos</a></li>
                             </ul>
                         </li>
@@ -108,10 +108,10 @@
                 </div>
             </div>
         </nav>
-        <div class="cover d-flex justify-content-end align-items-start p-5 flex-column" style="background-image: url(resource/img/img-9.jpg);">
-            <h1>Buscar recepcionistas</h1>
+        <div class="cover d-flex justify-content-end align-items-start p-5 flex-column" style="background-image: url(resource/img/img-8.jpg);">
+            <h1>Buscar medicos</h1>
             <p>El mejor trabajo del mundo.</p>
-            <form action="form_recepcionista.php">
+            <form action="form_medico.php">
                 <button type="submit" class="btn btn-info"> Agregar</button>
             </form>
         </div>
@@ -123,7 +123,7 @@
             <div class="d-flex bd-highlight mb-3">
                 <div class="ms-auto p-2 bd-highlight">
                     <form class="d-flex" id="busqueda">
-                        <input class="form-control me-2" type="search" name="nombre_recepcionista" aria-label="Search" placeholder="Buscar" autocomplete="off">
+                        <input class="form-control me-2" type="search" name="nombre_medico" aria-label="Search" placeholder="Buscar" autocomplete="off">
                         <button class="btn btn-primary" name="enviar" type="submit">
                             <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -138,13 +138,13 @@
                         <th scope="col"><h5>Núm.</h5></th>
                         <th scope="col"><h5>CURP</h5></th>
                         <th scope="col"><h5>Nombre</h5></th>
-                        <th scope="col"><h5>Correo electrónico</h5></th>
+                        <th scope="col"><h5>Especialidad</h5></th>
                         <th scope="col"><h5>Fecha de contratación</h5></th>
                         <th></th>
                         <th></th>
                         </tr>
                     </thead>
-                    <tbody id="tabla-recepcionista">
+                    <tbody id="tabla-medico">
                         <tr>
                             <td>-</td>
                             <td>-</td>
@@ -225,7 +225,7 @@
 
     <!-- Funciones paciente y alerta -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="js/funRecepcionista2.js"></script>
+    <script src="js/funMedico2.js"></script>
     <!-- Bootstrap JS JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>

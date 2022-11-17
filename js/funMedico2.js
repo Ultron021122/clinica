@@ -9,7 +9,7 @@ const eliminar = (id) =>{
     confirmButtonText: 'Aceptar'
     }).then((result) => {
         if (result.isConfirmed) {
-            var url = "./model/consultasRecepcionista.php";
+            var url = "./model/consultasMedico.php";
             var formdata = new FormData();
             formdata.append('tipo_operacion', 'eliminar');
             formdata.append('id', id);
@@ -33,7 +33,7 @@ const eliminar = (id) =>{
 }
 
 const pintar_tabla_resultados = (data) =>{
-    let tab_datos = document.querySelector("#tabla-recepcionista");
+    let tab_datos = document.querySelector("#tabla-medico");
     tab_datos.innerHTML = "";
     for(let item of data){
         tab_datos.innerHTML +=`
@@ -41,7 +41,7 @@ const pintar_tabla_resultados = (data) =>{
                 <td>${item.ID}</td>
                 <td>${item.CURP}</td>
                 <td>${item.Nombre} ${item.Apellidos}</td>
-                <td>${item.Email}</td>
+                <td>${item.Especialidad}</td>
                 <td>${item.Fecha_contratacion}</td>
                 <td>
                     <button class='btn btn-info btn-sm' onclick='editar(${item.ID});'><i class='fa-solid fa-pen-to-square sizeSimbol'></i></button>
@@ -56,7 +56,7 @@ const pintar_tabla_resultados = (data) =>{
 
 const editar = (id) => {
     //alert(id);
-    var url = "./model/consultasRecepcionista.php";
+    var url = "./model/consultasMedico.php";
     var formData = new FormData();
     formData.append('tipo_operacion','editar');
     formData.append('id',id);
@@ -76,34 +76,27 @@ const editar = (id) => {
             var Direccion = item.Direccion;
             var Telefono = item.Telefono;
             var Email = item.Email;
-            // var CURP = item.CURP;
+            var Especialidad = item.Especialidad;
             var Fecha_contratacion = item.Fecha_contratacion;
-            if(Sexo == 'Masculino'){
-                var sex = `
-                <div class="form-group row">
-                    <label for="Sexo" class="col-sm-3 col-form-label">Sexo</label>
-                    <div class="col-sm-9">
-                        <select name="Sexo" id="Sexo" class="form-control">
-                            <option value="Masculino" selected>Masculino</option>
-                            <option value="Femenino">Femenino</option>
-                        </select>
-                    </div>
-                </div>
-                `;
-            }else if(Sexo == 'Femenino'){
-                var sex = `
-                    <div class="form-group row">
-                        <label for="Sexo" class="col-sm-3 col-form-label">Sexo</label>
-                        <div class="col-sm-9">
-                            <select name="Sexo" id="Sexo" class="form-control">
-                                <option value="Masculino">Masculino</option>
-                                <option value="Femenino" selected>Femenino</option>
-                            </select>
-                        </div>
-                    </div>
-                `;
-            }
-            
+            var Cedula = item.Cedula_medica;
+            var sexos = ['Masculino', 'Femenino'];
+            var especialidades = ['Anestesiología', 'Anatomía Patológica', 'Cardiología', 'Dermatología','Gastroenterología', 'Ginegología', 'Hematología', 'Infectología','Nefrología', 'Neurología','Neumología', 'Oftalmología','Ortopedia', 'Otorrinolaringología','Pediátria', 'Psiquiatría','Urología'];
+            var gen;
+            var auxiliar;
+            sexos.forEach(function(opc){
+                if (opc == Sexo) {
+                    gen += `<option value="${opc}" selected>${opc}</option>`;
+                } else {
+                    gen += `<option value="${opc}">${opc}</option>`;
+                }
+            })
+            especialidades.forEach(function(especial){
+                if (especial == Especialidad) {
+                    auxiliar += `<option value="${especial}" selected>${especial}</option>`;
+                } else {
+                    auxiliar += `<option value="${especial}">${especial}</option>`;
+                }
+            })
         }
 
 
@@ -118,47 +111,70 @@ const editar = (id) => {
                 <div class="form-group row">
                     <label for="Nombre" class="col-sm-3 col-form-label">Nombre</label>
                     <div class="col-sm-9">
-                        <input type="text" value="${Nombre}" name="Nombre" id="Nombre" class="form-control">
+                        <input type="text" value="${Nombre}" name="Nombre" id="Nombre" class="form-control" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="Apellidos" class="col-sm-3 col-form-label">Apellidos</label>
                     <div class="col-sm-9">
-                        <input type="text" value="${Apellidos}" name="Apellidos" class="form-control">
+                        <input type="text" value="${Apellidos}" name="Apellidos" class="form-control" required>
                     </div>
                 </div>
-                ${sex}
+                <div class="form-group row">
+                    <label for="Sexo" class="col-sm-3 col-form-label">Sexo</label>
+                    <div class="col-sm-9">
+                        <select name="Sexo" id="Sexo" class="form-control" required>
+                            <option value="" class="form-text text-center"> Selecciona una opción </option>
+                            ${gen}
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <label for="Fecha_nacimiento" class="col-sm-6 col-form-label">Fecha de nacimiento</label>
                     <div class="col-sm-6">
-                        <input type="date" value="${Fecha_nacimiento}" name="Fecha_nacimiento" class="form-control">
+                        <input type="date" value="${Fecha_nacimiento}" name="Fecha_nacimiento" class="form-control" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="Fecha_contratacion" class="col-sm-6 col-form-label">Fecha de contratación</label>
                     <div class="col-sm-6">
-                        <input type="date" value="${Fecha_contratacion}" name="Fecha_contratacion" class="form-control">
+                        <input type="date" value="${Fecha_contratacion}" name="Fecha_contratacion" class="form-control" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="Dirección" class="col-sm-3 col-form-label">Dirección</label>
                     <div class="col-sm-9">
-                        <input type="text" value="${Direccion}" name="Direccion" class="form-control">
+                        <input type="text" value="${Direccion}" name="Direccion" class="form-control" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="Telefono" class="col-sm-3 col-form-label">Teléfono</label>
                     <div class="col-sm-9">
-                        <input type="tel" value="${Telefono}" name="Telefono" class="form-control">
+                        <input type="tel" value="${Telefono}" name="Telefono" class="form-control" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="Email" class="col-sm-3 col-form-label">Correo</label>
                     <div class="col-sm-9">
-                        <input type="email" value="${Email}" name="Email" class="form-control">
+                        <input type="email" value="${Email}" name="Email" class="form-control" required>
                     </div>
                 </div>
-              </form>  
+                <div class="form-group row">
+                    <label for="Especialidad" class="col-sm-4 col-form-label">Especialidad</label>
+                    <div class="col-sm-8">
+                        <select class="form-select" id="Especialidad" name="Especialidad" required>
+                            <option value="" class="form-text text-center"> Selecciona una opción </option>
+                            ${auxiliar}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="Cedula" class="col-sm-3 col-form-label">Cedula</label>
+                    <div class="col-sm-9">
+                        <input type="text" value="${Cedula}" name="Cedula" class="form-control" required>
+                    </div>
+                </div>
+            </form>  
             
             `,
             showCancelButton: true,
@@ -169,7 +185,7 @@ const editar = (id) => {
             if (result.value) {
                 const datos = document.querySelector("#update_form");
                 const datos_actualizar = new FormData(datos);
-                var url = "./model/consultasRecepcionista.php";
+                var url = "./model/consultasMedico.php";
                 fetch(url, {
                     method: 'post',
                     body: datos_actualizar
@@ -199,20 +215,20 @@ const editar = (id) => {
 }
 
 const formulariop = document.querySelector("#busqueda");
-const tabla = document.querySelector("#tabla-recepcionista");
+const tabla = document.querySelector("#tabla-medico");
 formulariop.addEventListener('submit', (e) =>{
     e.preventDefault();
     const datos = new FormData(document.getElementById('busqueda'));
-    let nombre_recepcionista    = datos.get('nombre_recepcionista');
+    let nombre_medico      = datos.get('nombre_medico');
     datos.append('tipo_operacion', 'buscar');
     let mensajes =  document.querySelector("#mensajes");
     mensajes.innerHTML = "";
-    if (nombre_recepcionista == "") {
+    if (nombre_medico == "") {
         let tipo_mensaje = "Debes de ingresar un nombre para buscar";
         error(tipo_mensaje);
         return false;
     }
-    var url = "./model/consultasRecepcionista.php";
+    var url = "./model/consultasMedico.php";
     fetch(url,{
         method:'post',
         body:datos

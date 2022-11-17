@@ -1,6 +1,6 @@
 <?php
 
-    class recepcionista extends connection {
+    class medico extends connection {
         
         protected $Curp;
         protected $Nombre;
@@ -12,13 +12,15 @@
         protected $Telefono;
         protected $Email;
         protected $Password;
+        protected $Especialidad;
+        protected $Cedula;
 
         public function __construct(){
             parent::__construct();
         }
 
-        public function set_registro($Curp, $Nombre, $Apellidos, $Sexo, $Fecha_nacimiento, $Direccion, $Telefono, $Email, $Fecha_contratacion, $Password){            
-            $sql = "SELECT * FROM recepcionista WHERE CURP = '$Curp'";
+        public function set_registro($Curp, $Nombre, $Apellidos, $Sexo, $Fecha_nacimiento, $Direccion, $Telefono, $Email, $Fecha_contratacion, $Password, $Especialidad, $Cedula){            
+            $sql = "SELECT * FROM medico WHERE CURP = '$Curp'";
             $consulta = $this->_db->query($sql);
             $respuesta = $consulta->fetch_all(MYSQLI_ASSOC);
             if(!$respuesta){
@@ -29,9 +31,9 @@
                 $ID = $this->select_usuario($Curp);
                 $pertenece = $ID['0']['ID'];
 
-                $sql3 = "INSERT INTO recepcionista(CURP, Nombre, Apellidos, Sexo, Fecha_nacimiento, Direccion, Telefono, Email, Fecha_contratacion, ID_user)VALUES('$Curp', '$Nombre', '$Apellidos', '$Sexo', '$Fecha_nacimiento', '$Direccion', '$Telefono', '$Email', '$Fecha_contratacion', '$pertenece')";
+                $sql3 = "INSERT INTO medico(CURP, Nombre, Apellidos, Sexo, Fecha_nacimiento, Direccion, Telefono, Email, Fecha_contratacion, Especialidad, Cedula_medica, ID_user)VALUES('$Curp', '$Nombre', '$Apellidos', '$Sexo', '$Fecha_nacimiento', '$Direccion', '$Telefono', '$Email', '$Fecha_contratacion', '$Especialidad', '$Cedula', '$pertenece')";
                 if($this->_db->query($sql3)) {
-                    $resultado = $this->select_recepcionista();
+                    $resultado = $this->select_medico();
                     return $resultado;
                     $this->_db->close();
                 } else {
@@ -42,8 +44,8 @@
             }
         }
 
-        public function select_recepcionista(){
-            $sql = "SELECT * FROM recepcionista";
+        public function select_medico(){
+            $sql = "SELECT * FROM medico";
             $resultado = $this->_db->query($sql);
             return $array = $resultado->fetch_all(MYSQLI_ASSOC);
         }
@@ -61,7 +63,7 @@
         }
 
         public function search_registro($Nombre) {
-            $sql = "SELECT * FROM recepcionista WHERE Nombre LIKE '%$Nombre%' OR Apellidos LIKE '%$Nombre%'";
+            $sql = "SELECT * FROM medico WHERE Nombre LIKE '%$Nombre%' OR Apellidos LIKE '%$Nombre%'";
             $result = $this->_db->query($sql);
             if ($result) {
                 return $result->fetch_all(MYSQLI_ASSOC);
@@ -73,7 +75,7 @@
         }
 
         public function search_editar_registro($ID) {
-            $sql = "SELECT * FROM recepcionista WHERE ID = '$ID'";
+            $sql = "SELECT * FROM medico WHERE ID = '$ID'";
             $result = $this->_db->query($sql);
             if ($result) {
                 return $result->fetch_all(MYSQLI_ASSOC);
@@ -84,10 +86,10 @@
             }
         }
 
-        public function modificar_registro($ID, $Nombre, $Apellidos, $Sexo, $Fecha_nacimiento, $Direccion, $Telefono, $Email, $Fecha_contratacion){
-            $sql = "UPDATE recepcionista SET Nombre='$Nombre', Apellidos='$Apellidos', Sexo='$Sexo', Fecha_nacimiento='$Fecha_nacimiento', Direccion='$Direccion', Telefono='$Telefono', Email='$Email', Fecha_contratacion='$Fecha_contratacion' WHERE ID = '$ID'";    
+        public function modificar_registro($ID, $Nombre, $Apellidos, $Sexo, $Fecha_nacimiento, $Direccion, $Telefono, $Email, $Fecha_contratacion, $Especialidad, $Cedula){
+            $sql = "UPDATE medico SET Nombre='$Nombre', Apellidos='$Apellidos', Sexo='$Sexo', Fecha_nacimiento='$Fecha_nacimiento', Direccion='$Direccion', Telefono='$Telefono', Email='$Email', Fecha_contratacion='$Fecha_contratacion', Especialidad='$Especialidad', Cedula_medica='$Cedula' WHERE ID = '$ID'";    
             if($this->_db->query($sql)){
-                $resultado = $this->select_recepcionista();
+                $resultado = $this->select_medico();
                 return $resultado;
                 $this->_db->close();
             } else {
@@ -95,10 +97,10 @@
             }
         }
 
-        public function eliminar_registro($ID){
+        public function eliminar_registro($ID) {
             $sql = "DELETE FROM usuario WHERE ID = '$ID'";
             if ($this->_db->query($sql)) {
-                $resultado = $this->select_recepcionista();
+                $resultado = $this->select_medico();
                 return $resultado;
             } else {
                 return "error";
