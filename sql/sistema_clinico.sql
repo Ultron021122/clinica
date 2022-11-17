@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-10-2022 a las 06:27:28
+-- Tiempo de generación: 17-11-2022 a las 05:02:45
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.0.19
 
@@ -20,6 +20,51 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `sistema_clinico`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `citas`
+--
+
+CREATE TABLE `citas` (
+  `ID` int(11) NOT NULL,
+  `Fecha` date NOT NULL,
+  `Hora` time NOT NULL,
+  `Motivo` text NOT NULL,
+  `Medico_ID` int(11) NOT NULL,
+  `Paciente_ID` int(11) NOT NULL,
+  `Recepcionista_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `medico`
+--
+
+CREATE TABLE `medico` (
+  `ID` int(11) NOT NULL,
+  `Nombre` varchar(30) NOT NULL,
+  `Apellidos` varchar(75) NOT NULL,
+  `Sexo` varchar(20) NOT NULL,
+  `Fecha_nacimiento` date NOT NULL,
+  `Direccion` varchar(255) NOT NULL,
+  `Telefono` bigint(10) NOT NULL,
+  `Email` varchar(255) NOT NULL,
+  `CURP` varchar(20) NOT NULL,
+  `Fecha_contratacion` date NOT NULL,
+  `Especialidad` varchar(255) NOT NULL,
+  `Cedula_medica` varchar(15) NOT NULL,
+  `ID_user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `medico`
+--
+
+INSERT INTO `medico` (`ID`, `Nombre`, `Apellidos`, `Sexo`, `Fecha_nacimiento`, `Direccion`, `Telefono`, `Email`, `CURP`, `Fecha_contratacion`, `Especialidad`, `Cedula_medica`, `ID_user`) VALUES
+(1, 'Andrea', 'Torres Andrade', 'Femenino', '1993-10-31', 'Revolución #95, Aztlán, Tonalá, Jalisco, México. C.P.45402', 3320302203, 'ana.torres7812@gmail.com', 'TOAA891245JISDOGP0', '2022-12-06', 'Anatomía Patológica', 'HUSDOUASFHJ7878', 18);
 
 -- --------------------------------------------------------
 
@@ -51,10 +96,7 @@ INSERT INTO `paciente` (`ID`, `CURP`, `Nombre`, `Apellidos`, `Sexo`, `Fecha_naci
 (5, 'GOGA902365HJCDTAB9', 'Alan Didier', 'Gonzalez Gonzalez', 'Masculino', '2020-09-08', 'Guadalajara, Jalisco, México', 3320302203, 'alan.didier@gmail.com'),
 (7, 'LOLJ908765MJVRCPA9', 'Josefina', 'López López', 'Femenino', '2009-07-10', 'Guadalajara, Jalisco, México', 3320302203, 'josefina.lopez2312@gmail.com'),
 (8, 'SAMJ342312HJCUSYAB6', 'Jorge Alberto', 'Santiago Martínez', 'Masculino', '2017-11-06', 'Guadalajara, Jalisco, México', 3320302203, 'marvelsml25@gmail.com'),
-(9, '22SDFSSSSSSSSSSS', 's', 'sf', 'Masculino', '2021-09-07', 'Guadalajara, Jalisco, México', 3320302203, 'marvelsml25@gmail.com'),
-(10, 'SSSSSSSSSSSSSSSSSS', 'h', 'dfdf', 'Masculino', '2021-09-07', 'Guadalajara, Jalisco, México', 3320302203, 'ana.isabel@gmail.com'),
-(11, 'WWWEEEEEEEEEEEEEEE', 'JO', 'JK', 'Femenino', '2020-08-06', 'Guadalajara, Jalisco, México', 3320302203, 'josef.ala.@gmail.com'),
-(13, 'UUUUUUUUUUUUUUUUUU', 'we', 'ddsd', 'Masculino', '2021-09-07', 'Guadalajara, Jalisco, México', 3320302203, 'marvelsml25@gmail.com');
+(9, 'GOOJA891234JDYSAUE8', 'José Alfredo', 'Gómez Ortíz', 'Masculino', '2021-09-07', 'Guadalajara, Jalisco, México', 3320302203, 'jose.alfredo09@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -81,7 +123,8 @@ CREATE TABLE `recepcionista` (
 --
 
 INSERT INTO `recepcionista` (`ID`, `Nombre`, `Apellidos`, `Sexo`, `Fecha_nacimiento`, `Direccion`, `Telefono`, `Email`, `CURP`, `Fecha_contratacion`, `ID_user`) VALUES
-(13, 'Juan Ricardo', 'Martínez López', 'Masculino', '1994-02-08', 'Monte Alban #95, C.Aztlan, Tónala, Jalisco, México. C.P.45402', 3345567890, 'juan.ricardo@gmail.com', 'MALJ940802HJCQWKP4', '2021-10-10', 10);
+(17, 'Juan Ricardo', 'Martínez López', 'Masculino', '1994-02-08', 'Monte Alban #95, C.Aztlan, Tónala, Jalisco, México. C.P.45402', 3345843937, 'juan.ricardo@gmail.com', 'MALJ940802HJCQWKP4', '2018-08-10', 14),
+(18, 'Ana Isabel', 'Martínez López', 'Femenino', '2005-07-07', 'Monte Alban #95, C.Aztlan, Tónala, Jalisco, México. C.P.45402', 3320302208, 'ana.isabel@gmail.com', 'MALA30141JICUASPO8', '2020-09-15', 15);
 
 -- --------------------------------------------------------
 
@@ -123,11 +166,30 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`ID`, `Username`, `Password`, `ID_user_role`) VALUES
 (1, 'administrador', 'admin', 1),
 (2, 'recepcionista', 'recep', 2),
-(10, 'MALJ940802HJCQWKP4', '$2y$10$YozLo2AzMFDPK854n1j1ZO4Yn2C1KJoeEgGGu.BeDHXi.UUKkcXIi', 2);
+(14, 'MALJ940802HJCQWKP4', '$2y$10$G0lk73FYNLJUtar52o/t3.jFiekULJ13WlvL5J3yiAS3mG5.CyXzG', 2),
+(15, 'MALA30141JICUASPO8', '$2y$10$68Cex03MVnr2s8SwUJ3HGOYgZzmgtgT8FdC.dJucW0msQqYVP1wyC', 2),
+(18, 'TOAA891245JISDOGP0', '$2y$10$QcokaMjKP5l2XbkNLrkHXOkS8Yca/yCsYALlR9mpMcBT1AyNL7NYC', 2);
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `citas`
+--
+ALTER TABLE `citas`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `foranea_medico` (`Medico_ID`),
+  ADD KEY `foranea_paciente` (`Paciente_ID`),
+  ADD KEY `foranea_recepcionista` (`Recepcionista_ID`);
+
+--
+-- Indices de la tabla `medico`
+--
+ALTER TABLE `medico`
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `Cedula_medica` (`Cedula_medica`),
+  ADD KEY `user_medic` (`ID_user`);
 
 --
 -- Indices de la tabla `paciente`
@@ -160,6 +222,18 @@ ALTER TABLE `usuario`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `citas`
+--
+ALTER TABLE `citas`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `medico`
+--
+ALTER TABLE `medico`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
@@ -169,7 +243,7 @@ ALTER TABLE `paciente`
 -- AUTO_INCREMENT de la tabla `recepcionista`
 --
 ALTER TABLE `recepcionista`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `user_role`
@@ -181,11 +255,25 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `citas`
+--
+ALTER TABLE `citas`
+  ADD CONSTRAINT `foranea_medico` FOREIGN KEY (`Medico_ID`) REFERENCES `medico` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `foranea_paciente` FOREIGN KEY (`Paciente_ID`) REFERENCES `paciente` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `foranea_recepcionista` FOREIGN KEY (`Recepcionista_ID`) REFERENCES `recepcionista` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `medico`
+--
+ALTER TABLE `medico`
+  ADD CONSTRAINT `user_medic` FOREIGN KEY (`ID_user`) REFERENCES `usuario` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `recepcionista`
