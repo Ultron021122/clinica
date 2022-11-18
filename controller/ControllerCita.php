@@ -58,7 +58,7 @@
         }
 
         public function modificar_registro($ID, $Paciente_ID, $Fecha, $Hora, $Medico_ID, $Motivo, $Recepcionista_ID) {
-            $sql = "SELECT * FROM citas WHERE Fecha='$Fecha' AND Hora='$Hora' OR Fecha='$Fecha' AND Paciente_ID='$Paciente_ID'";
+            $sql = "SELECT * FROM citas WHERE Fecha='$Fecha' AND Hora='$Hora' AND ID!='$ID' OR Fecha='$Fecha' AND Paciente_ID='$Paciente_ID' AND ID!='$ID'";
             $consulta = $this->_db->query($sql);
             $respuesta = $consulta->fetch_all(MYSQLI_ASSOC);
             if (!$respuesta){
