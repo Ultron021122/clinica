@@ -25,7 +25,7 @@
             $respuesta = $consulta->fetch_all(MYSQLI_ASSOC);
             if(!$respuesta){
                 $encriptar = password_hash($Password, PASSWORD_BCRYPT);
-                $usuario = "INSERT INTO usuario VALUES (NULL, '$Curp', '$encriptar', '2')";
+                $usuario = "INSERT INTO usuario VALUES (NULL, '$Curp', '$encriptar', '3')";
                 $realizar = $this->_db->query($usuario);
                 # Obtención de ID
                 $ID = $this->select_usuario($Curp);
