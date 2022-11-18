@@ -32,7 +32,7 @@
             }
         }
 
-        public function select_paciente(){
+        public function select_paciente() {
             $sql = "SELECT * FROM paciente";
             $resultado = $this->_db->query($sql);
             return $array = $resultado->fetch_all(MYSQLI_ASSOC);

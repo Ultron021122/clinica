@@ -20,6 +20,7 @@
             if ($resultado) {
                 if (password_verify($password, $resultado[0]['Password']) or $password == $resultado[0]['Password']) {
                     $_SESSION['login'] = true;
+                    $_SESSION['id'] = $resultado[0]['ID'];
                     $_SESSION['username'] = $resultado[0]['Username'];
                     $_SESSION['rol'] = $resultado[0]['ID_user_role'];
                     switch ($_SESSION['rol']) {
