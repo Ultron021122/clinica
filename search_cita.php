@@ -123,7 +123,7 @@
             <div class="d-flex bd-highlight mb-3">
                 <div class="ms-auto p-2 bd-highlight">
                     <form class="d-flex" id="busqueda">
-                        <input type="search" class="form-control me-2" name="nombre_paciente" aria-label="Search" placeholder="Buscar" autocomplete="off">
+                        <input type="search" class="form-control me-2" name="nombre_cita" aria-label="Search" placeholder="Buscar" autocomplete="off">
                         <button class="btn btn-primary" name="enviar" type="submit">
                             <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -136,15 +136,16 @@
                     <thead class="table-dark">
                         <tr>
                             <th scope="col"><h5>Núm.</h5></th>
-                            <th scope="col"><h5>CURP</h5></th>
-                            <th scope="col"><h5>Nombre</h5></th>
-                            <th scope="col"><h5>Sexo</h5></th>
-                            <th scope="col"><h5>Fecha de nacimiento</h5></th>
+                            <th scope="col"><h5>Fecha</h5></th>
+                            <th scope="col"><h5>Hora</h5></th>
+                            <th scope="col"><h5>Paciente</h5></th>
+                            <th scope="col"><h5>Medico</h5></th>
+                            <th scope="col"><h5>Motivo</h5></th>
                             <th></th>
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody id="tabla-paciente">
+                    <tbody id="tabla-cita">
                         <tr>
                             <td>-</td>
                             <td>-</td>

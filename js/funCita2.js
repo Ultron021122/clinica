@@ -182,7 +182,7 @@ const tabla = document.querySelector("#tabla-cita");
 formulariop.addEventListener('submit', (e) =>{
     e.preventDefault();
     const datos = new FormData(document.getElementById('busqueda'));
-    let nombre_medico      = datos.get('nombre_medico');
+    let nombre_medico      = datos.get('nombre_cita');
     datos.append('tipo_operacion', 'buscar');
     let mensajes =  document.querySelector("#mensajes");
     mensajes.innerHTML = "";

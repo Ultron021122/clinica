@@ -39,7 +39,7 @@
             echo json_encode($ejecutar);
             break;
         case 'buscar':
-            $Nombre = $_POST['nombre_paciente'];
+            $Nombre = $_POST['nombre_cita'];
             $consultas = new cita();
             $ejecutar = $consultas->search_registro($Nombre);
             echo json_encode($ejecutar);

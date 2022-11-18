@@ -86,7 +86,15 @@
         }
 
         public function search_registro($Nombre){
-
+            $sql = "SELECT citas.ID, citas.Fecha, citas.Hora, citas.Motivo, citas.Medico_ID, citas.Paciente_ID, citas.Recepcionista_ID, medico.Nombre AS Nombre_medico, medico.Apellidos AS Apellidos_medico, paciente.Nombre AS Nombre_paciente, paciente.Apellidos AS Apellidos_paciente FROM citas INNER JOIN paciente ON citas.Paciente_ID = paciente.ID INNER JOIN medico ON citas.Medico_ID = medico.ID WHERE paciente.Nombre LIKE '%$Nombre%' OR paciente.Apellidos LIKE '%$Nombre%' OR medico.Nombre LIKE '%$Nombre%' OR medico.Apellidos LIKE '%$Nombre%'";
+            $result = $this->_db->query($sql);
+            if ($result) {
+                return $result->fetch_all(MYSQLI_ASSOC);
+                $result->close();
+                $this->_db->close();
+            } else {
+                return "error";
+            }
         }
     }
 ?>
