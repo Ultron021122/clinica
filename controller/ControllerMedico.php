@@ -86,6 +86,18 @@
             }
         }
 
+        public function agenda_medico_usuario($ID) {
+            $sql = "SELECT * FROM medico WHERE ID_user='$ID'";
+            $result = $this->_db->query($sql);
+            if ($result) {
+                return $result->fetch_all(MYSQLI_ASSOC);
+                $result->close();
+                $this->_db->close();
+            } else {
+                return "error";
+            }
+        }
+
         public function modificar_registro($ID, $Nombre, $Apellidos, $Sexo, $Fecha_nacimiento, $Direccion, $Telefono, $Email, $Fecha_contratacion, $Especialidad, $Cedula){
             $sql = "UPDATE medico SET Nombre='$Nombre', Apellidos='$Apellidos', Sexo='$Sexo', Fecha_nacimiento='$Fecha_nacimiento', Direccion='$Direccion', Telefono='$Telefono', Email='$Email', Fecha_contratacion='$Fecha_contratacion', Especialidad='$Especialidad', Cedula_medica='$Cedula' WHERE ID = '$ID'";    
             if($this->_db->query($sql)){

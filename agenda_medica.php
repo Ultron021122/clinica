@@ -51,7 +51,7 @@
                 selectMirror: true,
                 nowIndicator: true,
                 eventSources:[
-                    'funcionJSON.php'
+                    'controller/ControllerJSON.php'
                 ]
             });
 
@@ -132,8 +132,8 @@
         </nav>
     </header>
 
-    <div class="container mt-6 mb-5">
-        <!-- <h3 class="text-center">Agenda médica</h3> -->
+    <!-- <h3 class="text-center">Agenda médica</h3> -->
+    <div class="container-xxl mt-6 mb-5">
         <div class="col-12" id='calendar'></div>
     </div>
 

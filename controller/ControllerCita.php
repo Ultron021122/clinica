@@ -14,7 +14,7 @@
         }
 
         public function set_registro($Paciente_ID, $Fecha, $Hora, $Medico_ID, $Motivo, $Recepcionista_ID) {
-            $sql = "SELECT * FROM citas WHERE Fecha='$Fecha' AND Hora='$Hora' OR Fecha='$Fecha' AND Paciente_ID='$Paciente_ID'";
+            $sql = "SELECT * FROM citas WHERE Fecha='$Fecha' AND Hora='$Hora' AND Medico_ID='$Medico_ID' OR Fecha='$Fecha' AND Paciente_ID='$Paciente_ID'";
             $consulta = $this->_db->query($sql);
             $respuesta = $consulta->fetch_all(MYSQLI_ASSOC);
             if (!$respuesta){
@@ -58,7 +58,7 @@
         }
 
         public function modificar_registro($ID, $Paciente_ID, $Fecha, $Hora, $Medico_ID, $Motivo, $Recepcionista_ID) {
-            $sql = "SELECT * FROM citas WHERE Fecha='$Fecha' AND Hora='$Hora' AND ID!='$ID' OR Fecha='$Fecha' AND Paciente_ID='$Paciente_ID' AND ID!='$ID'";
+            $sql = "SELECT * FROM citas WHERE Fecha='$Fecha' AND Hora='$Hora' AND ID!='$ID' AND Medico_ID='$Medico_ID' OR Fecha='$Fecha' AND Paciente_ID='$Paciente_ID' AND ID!='$ID'";
             $consulta = $this->_db->query($sql);
             $respuesta = $consulta->fetch_all(MYSQLI_ASSOC);
             if (!$respuesta){
@@ -80,6 +80,18 @@
             if ($this->_db->query($sql)) {
                 $resultado = $this->select_cita();
                 return $resultado;
+            } else {
+                return "error";
+            }
+        }
+
+        public function mostrar_citas_medico($ID) {
+            $sql = "SELECT * FROM citas WHERE Medico_ID = '$ID'";
+            $result = $this->_db->query($sql);
+            if ($result) {
+                return $result->fetch_all(MYSQLI_ASSOC);
+                $result->close();
+                $this->_db->close();
             } else {
                 return "error";
             }
