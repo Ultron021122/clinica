@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-11-2022 a las 05:02:45
+-- Tiempo de generación: 19-11-2022 a las 01:29:03
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.0.19
 
@@ -36,6 +36,16 @@ CREATE TABLE `citas` (
   `Paciente_ID` int(11) NOT NULL,
   `Recepcionista_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `citas`
+--
+
+INSERT INTO `citas` (`ID`, `Fecha`, `Hora`, `Motivo`, `Medico_ID`, `Paciente_ID`, `Recepcionista_ID`) VALUES
+(41, '2022-11-21', '09:00:00', 'El paciente muestra malestar estomacal.', 1, 1, 17),
+(43, '2022-11-18', '09:20:00', 'El paciente muestra sintomas de alta fiebre, dolor muscular y sangrado nasal.', 1, 2, 17),
+(44, '2022-11-18', '09:40:00', 'Revisión anual.', 1, 3, 17),
+(45, '2022-11-24', '10:00:00', 'Malestar muscular, en la parte inferior de la espalda.', 1, 1, 17);
 
 -- --------------------------------------------------------
 
@@ -94,9 +104,7 @@ INSERT INTO `paciente` (`ID`, `CURP`, `Nombre`, `Apellidos`, `Sexo`, `Fecha_naci
 (3, 'MALA301411MJICUDA0', 'Ana Isabel', 'Martínez López', 'Femenino', '2013-01-29', 'Guadalajara, Jalisco, México', 3315729512, 'ana.isabel@gmail.com'),
 (4, 'MALL920927MJRCUAB7', 'Liliana', 'Martínez López', 'Femenino', '2017-08-09', 'Guadalajara, Jalisco, México', 3320302203, 'liliana.martinez@gmail.com'),
 (5, 'GOGA902365HJCDTAB9', 'Alan Didier', 'Gonzalez Gonzalez', 'Masculino', '2020-09-08', 'Guadalajara, Jalisco, México', 3320302203, 'alan.didier@gmail.com'),
-(7, 'LOLJ908765MJVRCPA9', 'Josefina', 'López López', 'Femenino', '2009-07-10', 'Guadalajara, Jalisco, México', 3320302203, 'josefina.lopez2312@gmail.com'),
-(8, 'SAMJ342312HJCUSYAB6', 'Jorge Alberto', 'Santiago Martínez', 'Masculino', '2017-11-06', 'Guadalajara, Jalisco, México', 3320302203, 'marvelsml25@gmail.com'),
-(9, 'GOOJA891234JDYSAUE8', 'José Alfredo', 'Gómez Ortíz', 'Masculino', '2021-09-07', 'Guadalajara, Jalisco, México', 3320302203, 'jose.alfredo09@gmail.com');
+(7, 'LOLJ908765MJVRCPA9', 'Josefina', 'López López', 'Femenino', '2009-07-10', 'Guadalajara, Jalisco, México', 3320302203, 'josefina.lopez2312@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -165,10 +173,9 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`ID`, `Username`, `Password`, `ID_user_role`) VALUES
 (1, 'administrador', 'admin', 1),
-(2, 'recepcionista', 'recep', 2),
 (14, 'MALJ940802HJCQWKP4', '$2y$10$G0lk73FYNLJUtar52o/t3.jFiekULJ13WlvL5J3yiAS3mG5.CyXzG', 2),
 (15, 'MALA30141JICUASPO8', '$2y$10$68Cex03MVnr2s8SwUJ3HGOYgZzmgtgT8FdC.dJucW0msQqYVP1wyC', 2),
-(18, 'TOAA891245JISDOGP0', '$2y$10$QcokaMjKP5l2XbkNLrkHXOkS8Yca/yCsYALlR9mpMcBT1AyNL7NYC', 2);
+(18, 'TOAA891245JISDOGP0', '$2y$10$QcokaMjKP5l2XbkNLrkHXOkS8Yca/yCsYALlR9mpMcBT1AyNL7NYC', 3);
 
 --
 -- Índices para tablas volcadas
@@ -179,9 +186,9 @@ INSERT INTO `usuario` (`ID`, `Username`, `Password`, `ID_user_role`) VALUES
 --
 ALTER TABLE `citas`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `foranea_medico` (`Medico_ID`),
-  ADD KEY `foranea_paciente` (`Paciente_ID`),
-  ADD KEY `foranea_recepcionista` (`Recepcionista_ID`);
+  ADD KEY `llave_paciente` (`Paciente_ID`),
+  ADD KEY `llave_medico` (`Medico_ID`),
+  ADD KEY `llave_recepcionista` (`Recepcionista_ID`);
 
 --
 -- Indices de la tabla `medico`
@@ -225,7 +232,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `citas`
 --
 ALTER TABLE `citas`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT de la tabla `medico`
@@ -265,9 +272,9 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `citas`
 --
 ALTER TABLE `citas`
-  ADD CONSTRAINT `foranea_medico` FOREIGN KEY (`Medico_ID`) REFERENCES `medico` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `foranea_paciente` FOREIGN KEY (`Paciente_ID`) REFERENCES `paciente` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `foranea_recepcionista` FOREIGN KEY (`Recepcionista_ID`) REFERENCES `recepcionista` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `llave_medico` FOREIGN KEY (`Medico_ID`) REFERENCES `medico` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `llave_paciente` FOREIGN KEY (`Paciente_ID`) REFERENCES `paciente` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `llave_recepcionista` FOREIGN KEY (`Recepcionista_ID`) REFERENCES `recepcionista` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `medico`
