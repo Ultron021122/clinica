@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-11-2022 a las 01:29:03
+-- Tiempo de generación: 21-11-2022 a las 22:27:34
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.0.19
 
@@ -50,6 +50,50 @@ INSERT INTO `citas` (`ID`, `Fecha`, `Hora`, `Motivo`, `Medico_ID`, `Paciente_ID`
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `diagnostico`
+--
+
+CREATE TABLE `diagnostico` (
+  `ID` int(11) NOT NULL,
+  `FechaTiempo_diagnostico` datetime NOT NULL,
+  `Medicacion` text NOT NULL,
+  `Observaciones` text NOT NULL,
+  `Examen_fisico` text NOT NULL,
+  `ID_medico` int(11) NOT NULL,
+  `ID_expediente` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `diagnostico`
+--
+
+INSERT INTO `diagnostico` (`ID`, `FechaTiempo_diagnostico`, `Medicacion`, `Observaciones`, `Examen_fisico`, `ID_medico`, `ID_expediente`) VALUES
+(2, '2022-11-19 23:57:17', 'Paracetamol 1 tableta', 'No se tienen observaciones.', 'No se realizo examen físico.', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `expediente`
+--
+
+CREATE TABLE `expediente` (
+  `ID` int(11) NOT NULL,
+  `FechaTiempo_creación` datetime NOT NULL,
+  `ID_paciente` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `expediente`
+--
+
+INSERT INTO `expediente` (`ID`, `FechaTiempo_creación`, `ID_paciente`) VALUES
+(1, '2022-11-19 12:11:04', 2),
+(3, '2022-11-19 12:20:23', 1),
+(4, '2022-11-19 03:05:56', 3);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `medico`
 --
 
@@ -74,7 +118,8 @@ CREATE TABLE `medico` (
 --
 
 INSERT INTO `medico` (`ID`, `Nombre`, `Apellidos`, `Sexo`, `Fecha_nacimiento`, `Direccion`, `Telefono`, `Email`, `CURP`, `Fecha_contratacion`, `Especialidad`, `Cedula_medica`, `ID_user`) VALUES
-(1, 'Andrea', 'Torres Andrade', 'Femenino', '1993-10-31', 'Revolución #95, Aztlán, Tonalá, Jalisco, México. C.P.45402', 3320302203, 'ana.torres7812@gmail.com', 'TOAA891245JISDOGP0', '2022-12-06', 'Anatomía Patológica', 'HUSDOUASFHJ7878', 18);
+(1, 'Andrea', 'Torres Andrade', 'Femenino', '1993-10-31', 'Revolución #95, Aztlán, Tonalá, Jalisco, México. C.P.45402', 3320302203, 'ana.torres7812@gmail.com', 'TOAA891245JISDOGP0', '2022-12-06', 'Anatomía Patológica', 'HUSDOUASFHJ7878', 18),
+(3, 'Tomas Alberto', 'Gonzalez Aranda', 'Masculino', '1995-08-16', 'Gran plaza, París, Francia', 3390171512, 'tomas.alberto@medical.com', 'GOAT891234MJKILDO6', '2022-12-17', 'Otorrinolaringología', 'WEDFJKJ12346666', 19);
 
 -- --------------------------------------------------------
 
@@ -175,7 +220,8 @@ INSERT INTO `usuario` (`ID`, `Username`, `Password`, `ID_user_role`) VALUES
 (1, 'administrador', 'admin', 1),
 (14, 'MALJ940802HJCQWKP4', '$2y$10$G0lk73FYNLJUtar52o/t3.jFiekULJ13WlvL5J3yiAS3mG5.CyXzG', 2),
 (15, 'MALA30141JICUASPO8', '$2y$10$68Cex03MVnr2s8SwUJ3HGOYgZzmgtgT8FdC.dJucW0msQqYVP1wyC', 2),
-(18, 'TOAA891245JISDOGP0', '$2y$10$QcokaMjKP5l2XbkNLrkHXOkS8Yca/yCsYALlR9mpMcBT1AyNL7NYC', 3);
+(18, 'TOAA891245JISDOGP0', '$2y$10$QcokaMjKP5l2XbkNLrkHXOkS8Yca/yCsYALlR9mpMcBT1AyNL7NYC', 3),
+(19, 'GOAT891234MJKILDO6', '$2y$10$kmqwvkDVKYr18Pedb/9n0eXWH2YbxBMOewVoIngainmDBLp1t7IXW', 3);
 
 --
 -- Índices para tablas volcadas
@@ -189,6 +235,21 @@ ALTER TABLE `citas`
   ADD KEY `llave_paciente` (`Paciente_ID`),
   ADD KEY `llave_medico` (`Medico_ID`),
   ADD KEY `llave_recepcionista` (`Recepcionista_ID`);
+
+--
+-- Indices de la tabla `diagnostico`
+--
+ALTER TABLE `diagnostico`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `pertenece_expediente` (`ID_expediente`),
+  ADD KEY `realizo_medico` (`ID_medico`);
+
+--
+-- Indices de la tabla `expediente`
+--
+ALTER TABLE `expediente`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `expediente_paciente` (`ID_paciente`);
 
 --
 -- Indices de la tabla `medico`
@@ -232,13 +293,25 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `citas`
 --
 ALTER TABLE `citas`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+
+--
+-- AUTO_INCREMENT de la tabla `diagnostico`
+--
+ALTER TABLE `diagnostico`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `expediente`
+--
+ALTER TABLE `expediente`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `medico`
 --
 ALTER TABLE `medico`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
@@ -262,7 +335,7 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Restricciones para tablas volcadas
@@ -275,6 +348,19 @@ ALTER TABLE `citas`
   ADD CONSTRAINT `llave_medico` FOREIGN KEY (`Medico_ID`) REFERENCES `medico` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `llave_paciente` FOREIGN KEY (`Paciente_ID`) REFERENCES `paciente` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `llave_recepcionista` FOREIGN KEY (`Recepcionista_ID`) REFERENCES `recepcionista` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `diagnostico`
+--
+ALTER TABLE `diagnostico`
+  ADD CONSTRAINT `pertenece_expediente` FOREIGN KEY (`ID_expediente`) REFERENCES `expediente` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `realizo_medico` FOREIGN KEY (`ID_medico`) REFERENCES `medico` (`ID`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `expediente`
+--
+ALTER TABLE `expediente`
+  ADD CONSTRAINT `expediente_paciente` FOREIGN KEY (`ID_paciente`) REFERENCES `paciente` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `medico`
