@@ -1,6 +1,10 @@
 <?php
     require_once("php/connection.php");
+    require_once("controller/ControllerExpediente.php");
+    require_once("controller/ControllerDiagnostico.php");
+
     session_start();
+
     if(!isset($_SESSION['rol'])) {
         header('Location: index.php');
     } else {
@@ -8,6 +12,16 @@
         header('Location: index.php');
         }
     }
+
+    $Paciente_ID = $_GET['paciente'];
+
+    $expediente = new expediente();
+    $diagnostico = new diagnostico();
+
+    $create = $expediente->nuevo_expediente($Paciente_ID);
+    $cargar_expediente = $expediente->cargar_datos($Paciente_ID);
+    $id_expediente = $cargar_expediente[0]['ID'];
+    $cargar_diagnostico = $diagnostico->select_diagnostico($id_expediente);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,6 +44,11 @@
     <!-- AOS CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styleMain.css">
+    <style>
+        .cover {
+            height: 300px;
+        }
+    </style>
 </head>
 <body>
     <!-- SVG -->
@@ -80,7 +99,85 @@
                 </div>
             </div>
         </nav>
+        <div class="cover d-flex justify-content-end align-items-start p-5 flex-column" style="background-image: url(resource/img/img-8.jpg);">
+            <h1>Mostrar expediente</h1>
+            <p>Tus datos están a salvo.</p>
+            <form action="agenda_medica.php">
+                <button type="submit" class="btn btn-info"> Agendar médica</button>
+            </form>
+        </div>
     </header>
+
+    <!-- Datos del expediente -->
+    <section>
+        <div class="container mt-5 mb-5">
+            <h2><?php echo $Paciente_ID; ?></h2>
+            <h3><?php echo $create; ?></h3>
+            <?php
+                foreach ($cargar_expediente as $row) {
+            ?>
+                <h2><?php echo $row['ID']; ?></h2>
+                <h2><?php echo $row['FechaTiempo_creación']; ?></h2>
+                <h2><?php echo $row['ID_paciente']; ?></h2>
+                <h2><?php echo $row['Identificacion']; ?></h2>
+                <h2><?php echo $row['Nombre']; ?></h2>
+            <?php
+                }
+            ?>
+        </div>
+    </section>
+
+    <!-- Page Content -->
+    <section>
+        <div class="container mt-5 mb-5">
+            <?php
+             if ($cargar_diagnostico) {
+            ?>
+             <div class="table-responsive">
+                <table class="table table-striped table-hover text-center">
+                    <thead class="table-dark">
+                        <th scope="col"><h5>Núm.</h5></th>
+                        <th scope="col"><h5>Creado</h5></th>
+                        <th scope="col"><h5>Medicación</h5></th>
+                        <th scope="col"><h5>Observaciones</h5></th>
+                        <th scope="col"><h5>Examen físico</h5></th>
+                        <th></th>
+                        <th></th>
+                    </thead>
+                    <tbody id="tabla-diagnostico">
+                        <?php
+                        foreach ($cargar_diagnostico as $row) {
+                            $ID = $row['ID'];
+                        ?>
+                            <tr>
+                                <th scope="row"><?php echo $ID; ?></th>
+                                <td><?php echo $row['FechaTiempo_diagnostico']; ?></td>
+                                <td><?php echo $row['Medicacion']; ?></td>
+                                <td><?php echo $row['Observaciones']; ?></td>
+                                <td><?php echo $row['Examen_fisico']; ?></td>
+                                <td><?php echo "<button class='btn btn-info btn-sm' onclick='editar($ID);'><i class='fa-solid fa-pen-to-square sizeSimbol'></i></button>" ?></td>
+                                <td><?php echo "<button class='btn btn-danger btn-sm' onclick='eliminar($ID);'><i class='fa-solid fa-delete-left sizeSimbol'></i></button>" ?></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+             </div>
+            <?php  
+             } else {
+            ?>
+                <div class="alert alert-primary d-flex align-items-center" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+                    <div>
+                    No se encuentran diagnósticos registrados en la base de datos.
+                    </div>
+                </div>
+            <?php
+             }
+            ?>
+        </div>
+    </section>
 
     <!-- Footer -->
     <div class="container-fluid color-footer-g">
@@ -147,7 +244,7 @@
 
     <!-- Funciones paciente y alerta -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="js/funMedico.js"></script>
+    <script src="js/funDiagnostico.js"></script>
     <!-- Bootstrap JS JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>

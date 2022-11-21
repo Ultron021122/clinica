@@ -23,7 +23,7 @@
         $array[$num]["title"]='Cita médica '.$row['Hora'];
         $array[$num]["start"]=$row['Fecha'].'T'.$row['Hora'];
         $array[$num]["description"]=$row['Motivo'];
-        $array[$num]["url"]="expediente_medico.php?expediente=".$row['Paciente_ID'];
+        $array[$num]["url"]="expediente_medico.php?paciente=".$row['Paciente_ID'];
         $num ++;
     }
     // <?php echo "expediente.php?username=".$items['CURP_paciente']
