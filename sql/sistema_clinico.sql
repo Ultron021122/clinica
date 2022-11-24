@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-11-2022 a las 22:27:34
+-- Tiempo de generación: 24-11-2022 a las 09:41:01
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.0.19
 
@@ -34,7 +34,7 @@ CREATE TABLE `citas` (
   `Motivo` text NOT NULL,
   `Medico_ID` int(11) NOT NULL,
   `Paciente_ID` int(11) NOT NULL,
-  `Recepcionista_ID` int(11) NOT NULL
+  `Recepcionista_ID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -59,7 +59,7 @@ CREATE TABLE `diagnostico` (
   `Medicacion` text NOT NULL,
   `Observaciones` text NOT NULL,
   `Examen_fisico` text NOT NULL,
-  `ID_medico` int(11) NOT NULL,
+  `ID_medico` int(11) DEFAULT NULL,
   `ID_expediente` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -68,7 +68,7 @@ CREATE TABLE `diagnostico` (
 --
 
 INSERT INTO `diagnostico` (`ID`, `FechaTiempo_diagnostico`, `Medicacion`, `Observaciones`, `Examen_fisico`, `ID_medico`, `ID_expediente`) VALUES
-(2, '2022-11-19 23:57:17', 'Paracetamol 1 tableta', 'No se tienen observaciones.', 'No se realizo examen físico.', 1, 1);
+(1, '2022-11-24 03:57:38', 'Nada', 'Ninguna observación', 'No se realizo examen fisico', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -118,8 +118,7 @@ CREATE TABLE `medico` (
 --
 
 INSERT INTO `medico` (`ID`, `Nombre`, `Apellidos`, `Sexo`, `Fecha_nacimiento`, `Direccion`, `Telefono`, `Email`, `CURP`, `Fecha_contratacion`, `Especialidad`, `Cedula_medica`, `ID_user`) VALUES
-(1, 'Andrea', 'Torres Andrade', 'Femenino', '1993-10-31', 'Revolución #95, Aztlán, Tonalá, Jalisco, México. C.P.45402', 3320302203, 'ana.torres7812@gmail.com', 'TOAA891245JISDOGP0', '2022-12-06', 'Anatomía Patológica', 'HUSDOUASFHJ7878', 18),
-(3, 'Tomas Alberto', 'Gonzalez Aranda', 'Masculino', '1995-08-16', 'Gran plaza, París, Francia', 3390171512, 'tomas.alberto@medical.com', 'GOAT891234MJKILDO6', '2022-12-17', 'Otorrinolaringología', 'WEDFJKJ12346666', 19);
+(1, 'Andrea', 'Torres Andrade', 'Femenino', '1993-10-31', 'Revolución #95, Aztlán, Tonalá, Jalisco, México. C.P.45402', 3320302203, 'ana.torres7812@gmail.com', 'TOAA891245JISDOGP0', '2022-12-06', 'Anatomía Patológica', 'HUSDOUASFHJ7878', 18);
 
 -- --------------------------------------------------------
 
@@ -220,8 +219,7 @@ INSERT INTO `usuario` (`ID`, `Username`, `Password`, `ID_user_role`) VALUES
 (1, 'administrador', 'admin', 1),
 (14, 'MALJ940802HJCQWKP4', '$2y$10$G0lk73FYNLJUtar52o/t3.jFiekULJ13WlvL5J3yiAS3mG5.CyXzG', 2),
 (15, 'MALA30141JICUASPO8', '$2y$10$68Cex03MVnr2s8SwUJ3HGOYgZzmgtgT8FdC.dJucW0msQqYVP1wyC', 2),
-(18, 'TOAA891245JISDOGP0', '$2y$10$QcokaMjKP5l2XbkNLrkHXOkS8Yca/yCsYALlR9mpMcBT1AyNL7NYC', 3),
-(19, 'GOAT891234MJKILDO6', '$2y$10$kmqwvkDVKYr18Pedb/9n0eXWH2YbxBMOewVoIngainmDBLp1t7IXW', 3);
+(18, 'TOAA891245JISDOGP0', '$2y$10$QcokaMjKP5l2XbkNLrkHXOkS8Yca/yCsYALlR9mpMcBT1AyNL7NYC', 3);
 
 --
 -- Índices para tablas volcadas
@@ -242,7 +240,7 @@ ALTER TABLE `citas`
 ALTER TABLE `diagnostico`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `pertenece_expediente` (`ID_expediente`),
-  ADD KEY `realizo_medico` (`ID_medico`);
+  ADD KEY `pertenece_medico` (`ID_medico`);
 
 --
 -- Indices de la tabla `expediente`
@@ -305,7 +303,7 @@ ALTER TABLE `diagnostico`
 -- AUTO_INCREMENT de la tabla `expediente`
 --
 ALTER TABLE `expediente`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `medico`
@@ -347,14 +345,14 @@ ALTER TABLE `usuario`
 ALTER TABLE `citas`
   ADD CONSTRAINT `llave_medico` FOREIGN KEY (`Medico_ID`) REFERENCES `medico` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `llave_paciente` FOREIGN KEY (`Paciente_ID`) REFERENCES `paciente` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `llave_recepcionista` FOREIGN KEY (`Recepcionista_ID`) REFERENCES `recepcionista` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `llave_recepcionista` FOREIGN KEY (`Recepcionista_ID`) REFERENCES `recepcionista` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `diagnostico`
 --
 ALTER TABLE `diagnostico`
   ADD CONSTRAINT `pertenece_expediente` FOREIGN KEY (`ID_expediente`) REFERENCES `expediente` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `realizo_medico` FOREIGN KEY (`ID_medico`) REFERENCES `medico` (`ID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `pertenece_medico` FOREIGN KEY (`ID_medico`) REFERENCES `medico` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `expediente`
