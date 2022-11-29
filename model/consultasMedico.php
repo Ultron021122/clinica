@@ -54,6 +54,11 @@
             $ejecutar = $consultas->search_registro($Nombre);
             echo json_encode($ejecutar);
             break;
+        case 'mostrar':
+            $consultas = new medico();
+            $ejecutar = $consultas->select_medico();
+            echo json_encode($ejecutar);
+            break;
         default:
             # code...
             break;

@@ -1,6 +1,7 @@
 <?php
     class paciente extends connection {
 
+        protected $ID;
         protected $Curp;
         protected $Nombre;
         protected $Apellidos;

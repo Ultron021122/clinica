@@ -171,7 +171,7 @@
                         </div>
                         <!-- Teléfono -->
                         <div class="col-lg-4">
-                            <label for="Telefono" class="form-label">Teléfono</label>
+                            <label for="Telefono" pattern="[0-9]{4}" class="form-label">Teléfono</label>
                             <div class="input-group">
                                 <span class="input-group-text">Núm.</span>
                                 <input type="tel" class="form-control" id="Telefono" name="Telefono">

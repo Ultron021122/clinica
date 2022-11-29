@@ -144,7 +144,7 @@
                         <div class="col-3 p-2 border border-4 bg-dark text-white bg-gradient">
                             <h5>CURP:</h5>
                         </div>
-                        <div class="col-9 border border-4">
+                        <div class="col-9 p-2 border border-4">
                             <p class=""><?php echo $row['CURP'];?></p>
                         </div>
                     </div>
@@ -205,44 +205,71 @@
         ?>
     </section>
 
-    <!-- Page Content -->
+    <!-- Diagnostic Content -->
     <section>
-        <div class="container mt-1 mb-5">
+        <div class="container mt-1 mb-5 col-8">
             <?php
              if ($cargar_diagnostico) {
+                foreach ($cargar_diagnostico as $row) {
+                    $ID = $row['ID'];
             ?>
-             <div class="table-responsive">
-                <table class="table table-striped table-hover text-center">
-                    <thead class="table-dark">
-                        <th scope="col"><h5>Núm.</h5></th>
-                        <th scope="col"><h5>Creado</h5></th>
-                        <th scope="col"><h5>Medicación</h5></th>
-                        <th scope="col"><h5>Observaciones</h5></th>
-                        <th scope="col"><h5>Examen físico</h5></th>
-                        <th></th>
-                        <th></th>
-                    </thead>
-                    <tbody id="tabla-diagnostico">
-                        <?php
-                        foreach ($cargar_diagnostico as $row) {
-                            $ID = $row['ID'];
-                        ?>
-                            <tr>
-                                <th scope="row"><?php echo $ID; ?></th>
-                                <td><?php echo $row['FechaTiempo_diagnostico']; ?></td>
-                                <td><?php echo $row['Medicacion']; ?></td>
-                                <td><?php echo $row['Observaciones']; ?></td>
-                                <td><?php echo $row['Examen_fisico']; ?></td>
-                                <td><?php echo "<button class='btn btn-info btn-sm' onclick='editar($ID);'><i class='fa-solid fa-pen-to-square sizeSimbol'></i></button>" ?></td>
-                                <td><?php echo "<button class='btn btn-danger btn-sm' onclick='eliminar($ID);'><i class='fa-solid fa-delete-left sizeSimbol'></i></button>" ?></td>
-                            </tr>
-                        <?php
-                        }
-                        ?>
-                    </tbody>
-                </table>
-             </div>
-            <?php  
+                <div class="row justify-content-center">
+                    <div class="col-10 border border-2 bg-dark text-white bg-gradient">
+                        <h4 class="p-2">Diagnóstico</h4>
+                    </div>
+                    <div class="col-2 border border-2 bg-dark text-white bg-gradient">
+                        <h4 class="p-2">Diagnóstico</h4>
+                    </div>
+                </div>
+                <!-- Datos del diagnóstico -->
+                <div class="row justify-content-center">
+                    <div class="col-3 p-2 border border-2 bg-dark text-white bg-gradient">
+                        <h5>Número</h5>
+                    </div>
+                    <div class="col-9 p-2 border border-2 bg-dark text-white bg-gradient">
+                        <h5>Creación de expediente</h5>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-3 p-2 border border-2">
+                        <p><?php echo $row['ID']; ?></p>
+                    </div>
+                    <div class="col-9 p-2 border border-2">
+                        <p><?php echo $row['FechaTiempo_diagnostico'];?></p>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 p-2 border border-2 text-center bg-dark text-white bg-gradient">
+                        <h5>Medicación</h5>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 p-2 border border-2">
+                        <p><?php echo $row['Medicacion']; ?></p>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 p-2 border border-2 text-center bg-dark text-white bg-gradient">
+                        <h5>Observaciones</h5>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 p-2 border border-2">
+                        <p><?php echo $row['Observaciones']; ?></p>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 p-2 border border-2 text-center bg-dark text-white bg-gradient">
+                        <h5>Examen físico</h5>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 p-2 border border-2">
+                        <p><?php echo $row['Examen_fisico']; ?></p>
+                    </div>
+                </div>
+            <?php
+                }
              } else {
             ?>
                 <div class="alert alert-primary d-flex align-items-center" role="alert">

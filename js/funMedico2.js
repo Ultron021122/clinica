@@ -18,13 +18,19 @@ const eliminar = (id) =>{
                 body: formdata
             }).then(data => data.json())
             .then(data => {
-                console.log('Success:', data)
-                pintar_tabla_resultados(data);
-                Swal.fire(
-                'Eliminado', 
-                'El registro se elimino correctamente.',
-                'success'
-                )
+                // console.log('Success:', data);
+                if (data == "error") {
+                    '¡Error!',
+                    'No se pudo eliminar el registro.',
+                    'error'
+                } else {
+                    pintar_tabla_resultados(data);
+                    Swal.fire(
+                    'Eliminado', 
+                    'El registro se elimino correctamente.',
+                    'success'
+                    )
+                }
             })
             .catch(error => console.error('Error:', error));
            
