@@ -36,12 +36,12 @@ formulariop.addEventListener('submit', (e) =>{
         let tipo_mensaje = "Debes de ingresar una dirección";
         error(tipo_mensaje);
         return false;
-    } else if(!(/^\d{10}$/.test(Telefono))){
-        let tipo_mensaje = "Debes de ingresar un teléfono";
-        error(tipo_mensaje);
-        return false;
     } else if(Email == ""){
         let tipo_mensaje = "Debes de ingresar un correo electrónico";
+        error(tipo_mensaje);
+        return false;
+    } else if(!(/^\d{10}$/.test(Telefono))){
+        let tipo_mensaje = "Debes de ingresar un teléfono";
         error(tipo_mensaje);
         return false;
     }
