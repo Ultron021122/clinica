@@ -79,9 +79,6 @@
         </div>
         <!-- Formulario -->
         <div class="col-lg-5 bg-dark d-flex flex-column align-items-end min-vh-100">
-          <!-- <div class="px-lg-5 pt-lg-4 pb-lg-3 p-4 mb-auto w-100">
-            <img src="resource/img/favicon.png" width="100" height="32" />
-          </div> -->
           <div class="align-self-center w-100 px-lg-5 py-lg-5 p-4">
             <h1 class="font-weight-bold mb-4 text-center">Iniciar sesión</h1>
             <form class="mb-5" action="model/consultasSesion.php" method="POST">

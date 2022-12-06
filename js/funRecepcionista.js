@@ -31,7 +31,7 @@ formulariop.addEventListener('submit', (e) =>{
         error(tipo_mensaje);
         return false;
     } else if(Sexo  == ""){
-        let tipo_mensaje = "Debes de seleccionar un tipo de sexo";
+        let tipo_mensaje = "Debes de seleccionar un género";
         error(tipo_mensaje);
         return false;
     } else if(Fecha_nacimiento == ""){

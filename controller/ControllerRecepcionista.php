@@ -49,12 +49,6 @@
             return $array = $resultado->fetch_all(MYSQLI_ASSOC);
         }
 
-        public function select_usuario_general(){
-            $sql = "SELECT * FROM usuario";
-            $resultado = $this->_db->query($sql);
-            return $array =$resultado->fetch_all(MYSQLI_ASSOC);
-        }
-
         public function select_usuario($Curp){
             $sql = "SELECT * FROM usuario WHERE Username = '$Curp'";
             $resultado = $this->_db->query($sql);

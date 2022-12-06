@@ -109,7 +109,7 @@ const editar = (id) => {
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="Sexo" class="col-sm-3 col-form-label">Sexo</label>
+                    <label for="Sexo" class="col-sm-3 col-form-label">Género</label>
                     <div class="col-sm-9">
                         <select name="Sexo" id="Sexo" class="form-control" required>
                             <option value="" class="form-text text-center"> Selecciona una opción </option>

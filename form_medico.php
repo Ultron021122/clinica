@@ -158,7 +158,7 @@
                         </div>
                         <!-- Sexo -->
                         <div class="col-md-4">
-                            <label for="Sexo" class="form-label">Sexo</label>
+                            <label for="Sexo" class="form-label">Género</label>
                             <select class="form-select" id="Sexo" name="Sexo">
                                 <option value="" class="text-center form-text" selected>Elige una opción</option>
                                 <?php

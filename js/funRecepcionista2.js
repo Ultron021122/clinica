@@ -81,7 +81,7 @@ const editar = (id) => {
             if(Sexo == 'Masculino'){
                 var sex = `
                 <div class="form-group row">
-                    <label for="Sexo" class="col-sm-3 col-form-label">Sexo</label>
+                    <label for="Sexo" class="col-sm-3 col-form-label">Género</label>
                     <div class="col-sm-9">
                         <select name="Sexo" id="Sexo" class="form-control">
                             <option value="Masculino" selected>Masculino</option>
@@ -93,7 +93,7 @@ const editar = (id) => {
             }else if(Sexo == 'Femenino'){
                 var sex = `
                     <div class="form-group row">
-                        <label for="Sexo" class="col-sm-3 col-form-label">Sexo</label>
+                        <label for="Sexo" class="col-sm-3 col-form-label">Género</label>
                         <div class="col-sm-9">
                             <select name="Sexo" id="Sexo" class="form-control">
                                 <option value="Masculino">Masculino</option>

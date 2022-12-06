@@ -138,7 +138,7 @@
                             <th scope="col"><h5>Núm.</h5></th>
                             <th scope="col"><h5>CURP</h5></th>
                             <th scope="col"><h5>Nombre</h5></th>
-                            <th scope="col"><h5>Sexo</h5></th>
+                            <th scope="col"><h5>Género</h5></th>
                             <th scope="col"><h5>Fecha de nacimiento</h5></th>
                             <th></th>
                             <th></th>

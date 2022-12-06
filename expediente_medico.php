@@ -14,6 +14,7 @@
     }
 
     $Paciente_ID = $_GET['paciente'];
+    $Medico_ID = $_SESSION['id_medico'];
 
     $expediente = new expediente();
     $diagnostico = new diagnostico();
@@ -57,19 +58,6 @@
             .bd-placeholder-img-lg {
             font-size: 3.5rem;
             }
-        }
-        .themed-grid-col {
-            padding-top: .75rem;
-            padding-bottom: .75rem;
-            background-color: rgba(86, 61, 124, .15);
-            border: 2px solid rgba(86, 61, 124, .2);
-        }
-
-        .themed-container {
-            padding: .75rem;
-            margin-bottom: 1.5rem;
-            background-color: rgba(0, 123, 255, .15);
-            border: 1px solid rgba(0, 123, 255, .2);
         }
 
         .pricing-header {
@@ -126,13 +114,6 @@
                 </div>
             </div>
         </nav>
-        <!-- <div class="cover d-flex justify-content-end align-items-start p-5 flex-column" style="background-image: url(resource/img/img-8.jpg);">
-            <h1>Mostrar expediente</h1>
-            <p>Tus datos están a salvo.</p>
-            <form action="agenda_medica.php">
-                <button type="submit" class="btn btn-info"> Agendar médica</button>
-            </form>
-        </div> -->
     </header>
 
     <!-- Datos del expediente -->
@@ -140,87 +121,155 @@
         <?php
             foreach ($cargar_expediente as $row) {
         ?>
-            <div class="container mt-5 mb-2 pt-4">
+            <div class="container mt-5 mb-5 pt-4">
                 <div class="row">
-                    <div class="col-sm-4 themed-grid-col bg-dark text-white">
-                        <img src="resource/img/logo.png" class="img-fluid" alt="...">
-                    </div>
-                    <div class="col-sm-8 themed-grid-col bg-dark text-white text-center">
-                        <h2 class="pt-3"><?php echo $row['Nombre'].' '.$row['Apellidos']; ?></h2> <!--text-uppercase-->
-                        <h4 class="text-white">Expediente médico</h4><br>
-                        <p class="lh-1 text-muted">El presente Aviso de Privacidad se pone a disposición del TITULAR, en cumplimiento a lo dispuesto por la Ley Federal de Protección de Datos Personales en posesión de los Particulares, así como demás disposiciones legales aplicables.</p>
-                        <!-- Botones -->
-                        <div class="d-flex pt-2 justify-content-center">
-                            <form action="agenda_medica.php">
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="fa-solid fa-angles-left sizeSimbol"></i>
-                                    Regresar
-                                </button>
-                            </form>
-                            <button type="button" class="btn btn-success ms-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                <i class="fa-solid fa-notes-medical sizeSimbol"></i>
-                                Diagnóstico
-                            </button>
+                    <div class="col-12">
+                        <div class="card">
+                            <!-- Primer fila -->
+                            <div class="row g-0">
+                                <!-- Logo del software -->
+                                <div class="col-md-4 d-none d-lg-block">
+                                    <img src="resource/img/logo.png" class="cover-new mt-2" alt="...">
+                                </div>
+                                <!-- Expediente médico -->
+                                <div class="col-md-8 d-flex flex-column align-items-end mt-2">
+                                    <div class="card-body">
+                                        <h2 class="card-title text-center text-primary"><?php echo $row['Nombre'].' '.$row['Apellidos']; ?></h2>
+                                        <h4 class="text-center">Expediente médico</h4><br>
+                                        <p class="card-text"><small class="text-muted">El presente Aviso de Privacidad se pone a disposición del TITULAR, en cumplimiento a lo dispuesto por la Ley Federal de Protección de Datos Personales en posesión de los Particulares, así como demás disposiciones legales aplicables.</small></p>
+                                        <!-- Botones -->
+                                        <div class="d-flex pt-2 justify-content-center">
+                                            <form action="agenda_medica.php">
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="fa-solid fa-angles-left sizeSimbol"></i>
+                                                    Regresar
+                                                </button>
+                                            </form>
+                                            <?php echo "<button type='button' class='btn btn-success ms-2' onclick='insertar($Medico_ID, $id_expediente);'><i class='fa-regular fa-file-lines sizeSimbol'></i> Diagnóstico</button>"; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- tabla de datos -->
+                            <div class="row g-0 px-3">
+                                <table class="table caption-top table-bordered table-hover">
+                                    <caption style="text-align: center; color: #3678b3;"><h3>Datos del paciente</h3></caption>
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th scope="col">Campos</th>
+                                            <th scope="col">Valores actuales</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">CURP</th>
+                                            <td><?php echo $row['CURP']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Fecha de nacimiento</th>
+                                            <td><?php echo $row['Fecha_nacimiento']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Género</th>
+                                            <td><?php echo $row['Sexo']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Teléfono</th>
+                                            <td><?php echo $row['Telefono']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Correo electrónico</th>
+                                            <td><?php echo $row['Email']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Dirección</th>
+                                            <td><?php echo $row['Direccion']; ?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Diagnóstico -->
+                            <div class="row g-0 px-2 mt-2">
+                                <h3 style="text-align: center; color: #3678b3;">Diagnósticos</h3>
+                                <hr style="opacity: 1; height: 2px; margin: 1rem 0;">
+                                <?php
+                                if ($cargar_diagnostico) {
+                                ?>
+                                    <div class="row mb-5" id="card-diagnostico">
+                                    <?php
+                                    foreach ($cargar_diagnostico as $diag) {
+                                        $ID_diag = $diag['ID_diagnostico'];
+                                    ?>
+                                        <div class="col-12 col-md-6">
+                                            <div class="card">
+                                                <div class="row g-0">
+                                                    <div class="col-md-4 d-none d-lg-block">
+                                                        <img src="resource/img/diagnostico.png" class="cover-new mt-2" alt="...">
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-8 d-flex flex-column align-items-left">
+                                                        <div class="card-body">
+                                                            <h4 class="card-title2">Diagnóstico N°<?php echo $ID_diag;?></h4>
+                                                            <p class="card-text">Realizado: <?php echo $diag['FechaD']; ?><br>
+                                                            Médico: <?php echo $diag['Nombre'].' '.$diag['Apellidos']; ?><br>
+                                                            Especialidad: <?php echo $diag['Especialidad']; ?></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--Examen físico -->
+                                                <div class="row g-0">
+                                                    <div class="col-12">
+                                                        <div class="card-body">
+                                                            <h5 class="card-subtitle">Examen físico</h5>
+                                                            <hr style="margin: 0.5rem 0;">
+                                                            <p class="card-text"><?php echo $diag['Examen_fisico']; ?></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Observaciones -->
+                                                <div class="row g-0">
+                                                    <div class="col-12">
+                                                        <div class="card-body">
+                                                            <h5 class="card-subtitle">Observaciones</h5>
+                                                            <hr style="margin: 0.5rem 0;">
+                                                            <p class="card-text"><?php echo $diag['Observaciones']; ?></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Medicación -->
+                                                <div class="row g-0">
+                                                    <div class="col-12">
+                                                        <div class="card-body">
+                                                            <h5 class="card-subtitle">Medicación</h5>
+                                                            <hr style="margin: 0.5rem 0;">
+                                                            <p class="card-text"><?php echo $diag['Medicacion']; ?></p>
+                                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                                <button type="button" class="btn btn-primary"><i class="fa-solid fa-print sizeSimbol"></i></button>
+                                                                <button type="button" class="btn btn-info"><i class='fa-solid fa-pen-to-square sizeSimbol'></i></button>
+                                                                <?php echo "<button type='button' class='btn btn-danger' onclick='eliminar($ID_diag, $id_expediente)'><i class='fa-solid fa-delete-left sizeSimbol'></i></button>";?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                    </div>
+                                <?php
+                                } else {
+                                ?>
+                                    <div class="alert alert-primary d-flex align-items-center" role="alert">
+                                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+                                        <div>
+                                        No se encuentran diagnósticos registrados en la base de datos.
+                                        </div>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 themed-grid-col bg-dark text-white">
-                        <h4 class="text-center">Datos del paciente</h4>
-                    </div>
-                </div>
-                <!-- CURP -->
-                <div class="row">
-                    <div class="col-sm-4 themed-grid-col bg-dark text-white">
-                        <h4>CURP</h4>
-                    </div>
-                    <div class="col-sm-8 themed-grid-col">
-                        <h4 class=""><?php echo $row['CURP'];?></h4>
-                    </div>
-                </div>
-                <!-- Fecha de nacimiento -->
-                <div class="row">
-                    <div class="col-sm-4 themed-grid-col bg-dark text-white">
-                        <h4>Nacimiento</h4>
-                    </div>
-                    <div class="col-sm-8 themed-grid-col">
-                        <h4 class=""><?php echo $row['Fecha_nacimiento'];?></h4>
-                    </div>
-                </div>
-                <!-- Sexo -->
-                <div class="row">
-                    <div class="col-sm-4 themed-grid-col bg-dark text-white">
-                        <h4>Sexo</h4>
-                    </div>
-                    <div class="col-sm-8 themed-grid-col">
-                        <h4 class=""><?php echo $row['Sexo'];?></h4>
-                    </div>
-                </div>
-                <!-- Teléfono -->
-                <div class="row">
-                    <div class="col-sm-4 themed-grid-col bg-dark text-white">
-                        <h4>Teléfono</h4>
-                    </div>
-                    <div class="col-sm-8 themed-grid-col">
-                        <h4 class=""><?php echo $row['Telefono'];?></h4>
-                    </div>
-                </div>
-                <!-- Email -->
-                <div class="row">
-                    <div class="col-sm-4 themed-grid-col bg-dark text-white">
-                        <h4>Correo</h4>
-                    </div>
-                    <div class="col-sm-8 themed-grid-col">
-                        <h4 class=""><?php echo $row['Email'];?></h4>
-                    </div>
-                </div>
-                <!-- Dirección -->
-                <div class="row">
-                    <div class="col-sm-4 themed-grid-col bg-dark text-white">
-                        <h4>Dirección</h4>
-                    </div>
-                    <div class="col-sm-8 themed-grid-col">
-                        <h4 class=""><?php echo $row['Direccion'];?></h4>
                     </div>
                 </div>
             </div>
@@ -228,109 +277,13 @@
             }
         ?>
     </section>
-    <main class="container mt-5 mb-5">
-        <div class="row row-cols-1 row-cols-md-12 mb-3 text-center">
-            <div class="col">
-                <div class="card mb-4 rounded-3 shadow-sm border-dark">
-                    <div class="card-header py-3 text-white bg-dark border-dark">
-                        <h4 class="my-0 fw-normal">Enterprise</h4>
-                    </div>
-                    <div class="card-body">
-                        <h1 class="card-title pricing-card-title">$29<small class="text-muted fw-light">/mo</small></h1>
-                        <ul class="list-unstyled mt-3 mb-4">
-                        <li>30 users included</li>
-                        <li>15 GB of storage</li>
-                        <li>Phone and email support</li>
-                        <li>Help center access</li>
-                        </ul>
-                        <button type="button" class="w-100 btn btn-lg btn-dark">Contact us</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+
     <!-- Diagnostic Content -->
     <section>
-        <div class="container mt-1 mb-5 col-8">
-            <?php
-             if ($cargar_diagnostico) {
-                foreach ($cargar_diagnostico as $row) {
-                    $ID = $row['ID'];
-            ?>
-
-                <div class="row justify-content-center">
-                    <div class="col-10 border border-2 bg-dark text-white bg-gradient">
-                        <h4 class="p-2">Diagnóstico</h4>
-                    </div>
-                    <div class="col-2 border border-2 bg-dark text-white bg-gradient">
-                        <h4 class="p-2">Diagnóstico</h4>
-                    </div>
-                </div>
-                <!-- Datos del diagnóstico -->
-                <div class="row justify-content-center">
-                    <div class="col-3 p-2 border border-2 bg-dark text-white bg-gradient">
-                        <h5>Número</h5>
-                    </div>
-                    <div class="col-9 p-2 border border-2 bg-dark text-white bg-gradient">
-                        <h5>Creación de expediente</h5>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-3 p-2 border border-2">
-                        <p><?php echo $row['ID']; ?></p>
-                    </div>
-                    <div class="col-9 p-2 border border-2">
-                        <p><?php echo $row['FechaTiempo_diagnostico'];?></p>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-12 p-2 border border-2 text-center bg-dark text-white bg-gradient">
-                        <h5>Medicación</h5>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-12 p-2 border border-2">
-                        <p><?php echo $row['Medicacion']; ?></p>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-12 p-2 border border-2 text-center bg-dark text-white bg-gradient">
-                        <h5>Observaciones</h5>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-12 p-2 border border-2">
-                        <p><?php echo $row['Observaciones']; ?></p>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-12 p-2 border border-2 text-center bg-dark text-white bg-gradient">
-                        <h5>Examen físico</h5>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-12 p-2 border border-2">
-                        <p><?php echo $row['Examen_fisico']; ?></p>
-                    </div>
-                </div>
-            <?php
-                }
-             } else {
-            ?>
-                <div class="alert alert-primary d-flex align-items-center" role="alert">
-                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
-                    <div>
-                    No se encuentran diagnósticos registrados en la base de datos.
-                    </div>
-                </div>
-            <?php
-             }
-            ?>
+        <div class="container mt-1 mb-5">
+            
         </div>
     </section>
-
-
-    
 
     <!-- Footer -->
     <div class="container-fluid color-footer-g">

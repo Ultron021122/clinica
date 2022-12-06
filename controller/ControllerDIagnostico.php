@@ -16,7 +16,10 @@
         }
 
         public function select_diagnostico($ID_expediente) {
-            $sql = "SELECT * FROM diagnostico WHERE ID_expediente='$ID_expediente'";
+            $sql = "SELECT diagnostico.ID AS ID_diagnostico, diagnostico.FechaTiempo_diagnostico AS FechaD,
+                    diagnostico.Medicacion AS Medicacion, diagnostico.Observaciones AS Observaciones, diagnostico.Examen_fisico AS Examen_fisico,
+                    diagnostico.ID_medico AS MedicoID, medico.Nombre AS Nombre, medico.Apellidos AS Apellidos, diagnostico.ID_expediente AS ID_expediente,
+                    medico.Especialidad AS Especialidad FROM diagnostico INNER JOIN medico ON diagnostico.ID_medico = medico.ID WHERE diagnostico.ID_expediente=$ID_expediente;";
             $resultado = $this->_db->query($sql);
             if ($resultado) {
                 return $resultado->fetch_all(MYSQLI_ASSOC);
@@ -35,9 +38,9 @@
 
         public function set_registro($Medicacion, $Observaciones, $Examen_fisico, $ID_medico, $ID_expediente) {
             $FechaTiempo_diagnostico = date('y-m-d h:i:s');
-            $sql = "INSERT INTO diagnostico(FechaTiempo_diagnostico, Medicacion, Observaciones, Examen_fisico, ID_medico, ID_expediente)VALUES($FechaTiempo_diagnostico, $Medicacion, $Observaciones, $Examen_fisico, $ID_medico, $ID_expediente)";
+            $sql = "INSERT INTO diagnostico VALUES (NULL, '$FechaTiempo_diagnostico', '$Medicacion', '$Observaciones', '$Examen_fisico', '$ID_medico', '$ID_expediente')";
             if ($this->_db->query($sql)) {
-                $resultado = $this->allselect_diagnostico();
+                $resultado = $this->select_diagnostico($ID_expediente);
                 return $resultado;
                 $this->_db->close();
             } else {
@@ -68,10 +71,10 @@
             }
         }
 
-        public function eliminar_registro($ID) {
+        public function eliminar_registro($ID, $ID_expediente) {
             $sql = "DELETE FROM diagnostico WHERE ID = '$ID'";
             if ($this->_db->query($sql)) {
-                $resultado = $this->allselect_diagnostico();
+                $resultado = $this->select_diagnostico($ID_expediente);
                 return $resultado;
             } else {
                 return "error";

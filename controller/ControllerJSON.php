@@ -15,6 +15,7 @@
 
     $MedicoID = $medico->agenda_medico_usuario($ID);
     $medico_ID = $MedicoID[0]['ID'];
+    $_SESSION['id_medico'] = $medico_ID;
     $cita_medico = $cita->mostrar_citas_medico($medico_ID);
 
     $array = array();
