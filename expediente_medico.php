@@ -244,7 +244,7 @@
                                                             <p class="card-text"><?php echo $diag['Medicacion']; ?></p>
                                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                                 <button type="button" class="btn btn-primary"><i class="fa-solid fa-print sizeSimbol"></i></button>
-                                                                <button type="button" class="btn btn-info"><i class='fa-solid fa-pen-to-square sizeSimbol'></i></button>
+                                                                <?php echo "<button type='button' class='btn btn-info' onclick='editar($ID_diag)'><i class='fa-solid fa-pen-to-square sizeSimbol'></i></button>";?>
                                                                 <?php echo "<button type='button' class='btn btn-danger' onclick='eliminar($ID_diag, $id_expediente)'><i class='fa-solid fa-delete-left sizeSimbol'></i></button>";?>
                                                             </div>
                                                         </div>

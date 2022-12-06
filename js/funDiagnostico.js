@@ -47,7 +47,7 @@ const pintar_resultados = (data) =>{
                                 <p class="card-text">${item.Medicacion}</p>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <button type="button" class="btn btn-primary"><i class="fa-solid fa-print sizeSimbol"></i></button>
-                                    <button type="button" class="btn btn-info"><i class='fa-solid fa-pen-to-square sizeSimbol'></i></button>
+                                    <button type="button" class="btn btn-info" onclick='editar(${item.ID_diagnostico})'><i class='fa-solid fa-pen-to-square sizeSimbol'></i></button>
                                     <button type='button' class='btn btn-danger' onclick='eliminar(${item.ID_diagnostico}, ${item.ID_expediente})'><i class='fa-solid fa-delete-left sizeSimbol'></i></button>
                                 </div>
                             </div>
@@ -169,4 +169,101 @@ const eliminar = (id, idExpediente) =>{
            
         }
     })
+}
+
+const editar = (id) => {
+    //alert(id);
+    var url = "./model/consultasDiagnostico.php";
+    var formData = new FormData();
+    formData.append('tipo_operacion','editar');
+    formData.append('id',id);
+    fetch(url,{
+        method:'post',
+        body:formData
+    })
+    .then(data => data.json())
+    .then(data => {
+        console.log('success', data);
+        for(let item of data){
+            var ID_diagnostico = item.ID_diagnostico;
+            var Fecha_diagnostico = item.FechaD;
+            var Medicacion = item.Medicacion;
+            var Observaciones = item.Observaciones;
+            var Examen_fisico = item.Examen_fisico;
+            var ID_medico = item.MedicoID;
+            var Especialidad = item.Especialidad;
+            var Nombre = item.Nombre;
+            var Apellidos = item.Apellidos;
+            var ID_expediente = item.ID_expediente;
+        }
+        Swal.fire({
+            title: 'Actualizar información',
+            html: `
+              <form id="update_form" class="text-start">
+                <input type="text" value="update" name="tipo_operacion" hidden="true">
+                <!-- ID del medico -->
+                <input type="number" value="${ID_diagnostico}" hidden="true" name="ID_diagnostico" class="form-control">
+                <input type="number" value="${ID_expediente}" hidden="true" name="ID_expediente" class="form-control">
+                <hr>
+                <div class="form-group row">
+                    <label for="Fecha_diagnostico" class="col-sm-5 col-form-label">Realizado</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="Fecha_diagnostico" value="${Fecha_diagnostico}" id="Fecha_diagnostico" class="form-control" disabled>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="Examen_fisico" class="col-sm-5 col-form-label">Examen físico</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="Examen_fisico" value="${Examen_fisico}" id="Examen_fisico" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="Observaciones" class="col-sm-5 col-form-label">Observaciones</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="Observaciones" value="${Observaciones}" id="Observaciones" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="Medicacion" class="col-sm-5 col-form-label">Medicación</label>
+                    <div class="col-sm-7">
+                        <input type="text" name="Medicacion" value="${Medicacion}" id="Medicacion" class="form-control" required>
+                    </div>
+                </div>
+            </form>
+            `,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar'
+            }).then((result) => {
+            if (result.value) {
+                const datos = document.querySelector("#update_form");
+                const datos_actualizar = new FormData(datos);
+                var url = "./model/consultasDiagnostico.php";
+                fetch(url, {
+                    method: 'post',
+                    body: datos_actualizar
+                })
+                .then(info => info.json())
+                .then(info =>{ 
+                    console.log('Success:', info);
+                    pintar_resultados(info);
+                    Swal.fire(
+                        'Exito',
+                        'Se actualizo con exito',
+                        'success'
+                    )
+                      
+                })
+                .catch(function(error){
+                    console.error('Error:', error)
+                }); 
+
+            }
+        })
+             
+    })
+    .catch(function (error){
+        console.error('error',error);
+    }); 
 }
