@@ -120,7 +120,7 @@ const pintar_resultados = (data) =>{
                                 <hr style="margin: 0.5rem 0;">
                                 <p class="card-text">${item.Medicacion}</p>
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-primary"><i class="fa-solid fa-print sizeSimbol"></i></button>
+                                    <a href="diagnostico.php?nd=${item.ID_diagnostico}" target="_blank" class="btn btn-primary"><i class="fa-solid fa-print sizeSimbol"></i></a>
                                     <button type="button" class="btn btn-info" onclick='editar(${item.ID_diagnostico})'><i class='fa-solid fa-pen-to-square sizeSimbol'></i></button>
                                     <button type='button' class='btn btn-danger' onclick='eliminar(${item.ID_diagnostico}, ${item.ID_expediente})'><i class='fa-solid fa-delete-left sizeSimbol'></i></button>
                                 </div>
