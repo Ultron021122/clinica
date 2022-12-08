@@ -1,6 +1,7 @@
 <?php
     require_once("php/connection.php");
     require_once("controller/ControllerDiagnostico.php");
+    require_once("controller/ControllerExpediente.php");
 
     session_start();
 
@@ -12,11 +13,12 @@
         }
     }
 
-    $ID = $_GET['nd'];
+    $ID = $_GET['ed'];
 
     $diagnostico = new diagnostico();
-    $cargar_expediente = $diagnostico->imprimir_diagnostico($ID);
-    $cargar_diagnostico = $diagnostico->search_editar_registro($ID);
+    $expediente = new expediente();
+    $cargar_expediente = $expediente->imprimir_expediente($ID);
+    $cargar_diagnostico = $diagnostico->select_diagnostico($ID);
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -134,7 +136,9 @@
                             </tr>
                             <tr>
                                 <th>CURP:</th>
-                                <td colspan="3"><?php echo $row['CURP']; ?></td>
+                                <td><?php echo $row['CURP']; ?></td>
+                                <th>Teléfono</th>
+                                <td><?php echo $row['Telefono']; ?></td>
                             </tr>
                             <tr>
                                 <th>Nombre:</th>
@@ -144,9 +148,17 @@
                             </tr>
                             <tr>
                                 <th>Fecha de nacimiento:</th>
-                                <td><?php echo $row['FechaN']; ?></td>
+                                <td><?php echo $row['Fecha_nacimiento']; ?></td>
                                 <th>Género:</th>
                                 <td><?php echo $row['Sexo']; ?></td>
+                            </tr>
+                            <tr>
+                                <th>Correo electrónico</th>
+                                <td colspan="3"><?php echo $row['Email']; ?></td>
+                            </tr>
+                            <tr>
+                                <th>Dirección</th>
+                                <td colspan="3"><?php echo $row['Direccion']; ?></td>
                             </tr>
                         </tbody>
                     </table>
@@ -154,7 +166,7 @@
                     <?php
                         foreach ($cargar_diagnostico as $value) {
                     ?>
-                            <table class="diagnostico mt-3">
+                            <table class="mt-3">
                                 <tbody>
                                     <tr>
                                         <th class="" style="text-align: center;" colspan="2">Diagnóstico N°<?php echo $value['ID_diagnostico'];?></th>
@@ -189,14 +201,6 @@
                                     <tr>
                                         <td colspan="2"><?php echo $value['Medicacion'];?></td>
                                     </tr>                 
-                                </tbody>
-                            </table>
-                            <table class="mt-5">
-                                <tbody>
-                                    <tr>
-                                        <th style="text-align:right; border:none;">Firma del médico:</th>
-                                        <td width="250px"></td>
-                                    </tr>
                                 </tbody>
                             </table>
                     <?php

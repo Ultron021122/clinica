@@ -112,7 +112,7 @@
                 </div>
             </div>
         </nav>
-        <div class="cover d-flex justify-content-end align-items-start p-5 flex-column" style="background-image: url(resource/img/img-6.jpg);">
+        <div class="cover d-flex justify-content-end align-items-start p-5 flex-column" style="background-image: url(resource/img/img-12.jpg);">
             <h1>Mostrar citas</h1>
             <p>La mejor accesibilidad en horarios.</p>
             <form action="form_cita.php">

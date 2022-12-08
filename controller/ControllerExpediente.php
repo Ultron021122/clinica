@@ -53,5 +53,15 @@
             $resultado = $this->_db->query($sql);
             return $array = $resultado->fetch_all(MYSQLI_ASSOC);
         }
+
+        public function imprimir_expediente($ID) {
+            $sql = "SELECT expediente.ID, expediente.FechaTiempo_creación, expediente.ID_paciente, paciente.ID AS Identificacion, paciente.CURP,TIMESTAMPDIFF(YEAR,paciente.Fecha_nacimiento,CURDATE()) AS Edad, paciente.Nombre, paciente.Apellidos, paciente.Sexo, paciente.Fecha_nacimiento, paciente.Direccion, paciente.Telefono, paciente.Email FROM expediente INNER JOIN paciente ON expediente.ID_paciente = paciente.ID WHERE expediente.ID = '$ID'";
+            $consulta = $this->_db->query($sql);
+            if ($consulta) {
+                return $consulta->fetch_all(MYSQLI_ASSOC);
+                $consulta->close();
+                $this->_db->close();
+            }
+        }
     }
 ?>

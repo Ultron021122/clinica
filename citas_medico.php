@@ -1,6 +1,6 @@
 <?php
     require_once("php/connection.php");
-    require_once("controller/ControllerDiagnostico.php");
+    require_once("./controller/ControllerMedico.php");
 
     session_start();
 
@@ -12,11 +12,10 @@
         }
     }
 
-    $ID = $_GET['nd'];
+    $ID = $_GET['md'];
 
-    $diagnostico = new diagnostico();
-    $cargar_expediente = $diagnostico->imprimir_diagnostico($ID);
-    $cargar_diagnostico = $diagnostico->search_editar_registro($ID);
+    $medico = new medico();
+    $agenda = $medico->agenda_medico_usuario($ID);
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -24,7 +23,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Diagnostico</title>
+        <title>Agenda médica</title>
         <link rel="icon" href="resource/img/favicon.png" type="image/x-icon">
         <style>
             @page {
@@ -111,9 +110,6 @@
             <?php echo date('d/m/Y g:i a');?>
         </header>
         <section>
-            <?php
-                foreach ($cargar_expediente as $row) {
-            ?>
                 <div class="container mb-5 pt-4">
                     <table>
                         <th style="border: none;">
@@ -121,91 +117,58 @@
                         </th>
                         <th style="text-align: center; border:none;">
                             <h1 class="title-p">Medical Control System</h1>
-                            <h2>Diagnóstico Médico</h2>
+                            <h2>Agenda Médica</h2>
                             <h4 style="line-height: 0;">UNIVERSIDAD DE GUADALAJARA</h4>
                             <p style="line-height: 1; color:gray;">Blvd. Gral. Marcelino García Barragán 1421, Olímpica, 44430 Guadalajara, Jal.</p>
                         </th>
                     </table>
-
                     <table class="mt-3">
                         <tbody>
                             <tr>
-                                <th class="" style="text-align: center;" colspan="4">Datos del paciente</th>
+                                <th class="" style="text-align: center;" colspan="2">Médico</th>
                             </tr>
                             <tr>
-                                <th>CURP:</th>
-                                <td colspan="3"><?php echo $row['CURP']; ?></td>
+                                <th width="250px">Nombre:</th>
+                                <td><?php echo $agenda[0]['Nombre'].' '.$agenda[0]['Apellidos']; ?></td>
                             </tr>
                             <tr>
-                                <th>Nombre:</th>
-                                <td><?php echo $row['Nombre'].' '.$row['Apellidos']; ?></td>
-                                <th>Edad:</th>
-                                <td><?php echo $row['Edad'].' años'; ?></td>
+                                <th>Especialidad:</th>
+                                <td><?php echo $agenda[0]['Especialidad']; ?></td>
                             </tr>
                             <tr>
-                                <th>Fecha de nacimiento:</th>
-                                <td><?php echo $row['FechaN']; ?></td>
-                                <th>Género:</th>
-                                <td><?php echo $row['Sexo']; ?></td>
+                                <th>Cédula médica:</th>
+                                <td><?php echo $agenda[0]['Cedula_medica']; ?></td>
                             </tr>
                         </tbody>
                     </table>
-
-                    <?php
-                        foreach ($cargar_diagnostico as $value) {
-                    ?>
-                            <table class="diagnostico mt-3">
-                                <tbody>
-                                    <tr>
-                                        <th class="" style="text-align: center;" colspan="2">Diagnóstico N°<?php echo $value['ID_diagnostico'];?></th>
-                                    </tr>
-                                    <tr>
-                                        <th width="250px">Consulta realizada:</th>
-                                        <td><?php echo $value['FechaD']; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Médico:</th>
-                                        <td><?php echo $value['Nombre'].' '.$value['Apellidos']; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Especialidad:</th>
-                                        <td><?php echo $value['Especialidad']; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="2">Examen físico:</th>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"><?php echo $value['Examen_fisico'];?></td>
-                                    </tr>    
-                                    <tr>
-                                        <th colspan="2">Observaciones:</th>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"><?php echo $value['Observaciones'];?></td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="2">Medicación:</th>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"><?php echo $value['Medicacion'];?></td>
-                                    </tr>                 
-                                </tbody>
-                            </table>
-                            <table class="mt-5">
-                                <tbody>
-                                    <tr>
-                                        <th style="text-align:right; border:none;">Firma del médico:</th>
-                                        <td width="250px"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                    <?php
-                        }
-                    ?>
+                    <table class="mt-3">
+                        <tr>
+                            <th style="text-align: center;" colspan="4">
+                                Calendario citas médicas
+                            </th>
+                        </tr>
+                        <tr>
+                            <th width="50px">N°</th>
+                            <th style="text-align: center;">Fecha</th>
+                            <th style="text-align: center;">Hora</th>
+                            <th style="text-align: center;">Paciente</th>
+                        </tr>
+                        <?php
+                            $n =1;
+                            foreach ($agenda as $row) {
+                        ?>
+                                <tr>
+                                    <td><?php echo $n; ?></td>
+                                    <td><?php echo $row['Fecha'];?></td>
+                                    <td><?php echo $row['Hora'];?></td>
+                                    <td><?php echo $row['N_paciente'].' '.$row['A_paciente'];?></td>
+                                </tr>
+                        <?php
+                                $n++;
+                            }
+                        ?>
+                    </table>
                 </div> 
-            <?php  
-                }
-            ?>
         </section>
         <footer>
             Copyright &copy; <?php echo date("Y");?> Team 7 - Medical Control System

@@ -10,6 +10,7 @@
               break;
               case 3:
                   header('Location: ./menu_medico.php');
+                break;
     }
   }
 ?>
@@ -50,20 +51,20 @@
             <div class="carousel-inner">
               <div class="carousel-item img-1 min-vh-100 active">
                 <div class="carousel-caption d-none d-md-block">
-                  <h4 class="font-weight-bold">La más potente del mercado</h4>
-                  <a class="text-muted text-decoration-none">Visita nuestra tienda</a>
+                  <h4 class="font-weight-bold">El mejor sistema del mercado</h4>
+                  <a class="text-muted text-decoration-none">Visita nuestro repositorio en GitHub</a>
                 </div>
               </div>
               <div class="carousel-item img-2 min-vh-100">
                 <div class="carousel-caption d-none d-md-block">
-                  <h4 class="font-weight-bold">Descubre la nueva generación</h4>
-                  <a class="text-muted text-decoration-none">Visita nuestra tienda</a>
+                  <h4 class="font-weight-bold">Descubre nuevas actualizaciones</h4>
+                  <a class="text-muted text-decoration-none">Visita nuestro repositorio en GitHub</a>
                 </div>
               </div>
               <div class="carousel-item img-3 min-vh-100">
                 <div class="carousel-caption d-none d-md-block">
-                  <h4 class="font-weight-bold">Descubre la nueva generación</h4>
-                  <a class="text-muted text-decoration-none">Visita nuestra tienda</a>
+                  <h4 class="font-weight-bold">La organización que cuida mejor de ti</h4>
+                  <a class="text-muted text-decoration-none">Visita nuestro repositorio en GitHub</a>
                 </div>
               </div>
             </div>
@@ -85,11 +86,11 @@
               <input type="text" name="tipo_operacion" value="iniciar" hidden>
               <div class="mb-4">
                 <label for="Username" class="form-label font-weight-bold">Nombre usuario</label>
-                <input type="text" class="form-control bg-dark-x border-0" id="Username" name="Username" placeholder="Ingresa tu usuario" aria-describedby="usuarioHelp" autocomplete="off" required>
+                <input type="text" class="form-control bg-dark-x border-0" id="Username" name="Username" placeholder="Ingresa tu usuario" aria-describedby="usuarioHelp" autocomplete="off" maxlength="18" required>
               </div>
               <div class="mb-4">
                 <label for="password" class="form-label font-weight-bold">Contraseña</label>
-                <input type="password" class="form-control bg-dark-x border-0 mb-2" name="Password" placeholder="Ingresa tu contraseña" id="password" autocomplete="off" required>
+                <input type="password" class="form-control bg-dark-x border-0 mb-2" name="Password" maxlength="15" placeholder="Ingresa tu contraseña" id="password" autocomplete="off" required>
                 <a href="#" id="emailHelp" class="form-text text-muted text-decoration-none">¿Has olvidado tu contraseña?</a>
               </div>
               <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>

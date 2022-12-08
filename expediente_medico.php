@@ -12,6 +12,9 @@
         header('Location: index.php');
         }
     }
+    if (!isset($_SESSION['id_medico'])) {
+        header('Location: agenda_medica.php');
+    }
 
     $Paciente_ID = $_GET['paciente'];
     $Medico_ID = $_SESSION['id_medico'];
@@ -146,6 +149,7 @@
                                                 </button>
                                             </form>
                                             <?php echo "<button type='button' class='btn btn-success ms-2' onclick='insertar($Medico_ID, $id_expediente);'><i class='fa-regular fa-file-lines sizeSimbol'></i> Diagnóstico</button>"; ?>
+                                            <a href="<?php echo 'historial.php?ed='.$id_expediente; ?>" target="_blank" class="btn btn-primary ms-2"><i class="fa-solid fa-print sizeSimbol"></i> Expediente</a>
                                         </div>
                                     </div>
                                 </div>

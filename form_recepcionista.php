@@ -143,7 +143,7 @@
                         <!-- Password -->
                         <div class="col-md-5">
                             <label for="Password" class="form-label">Contraseña</label>
-                            <input type="password" maxlength="15" class="form-control" id="Password" name="Password">
+                            <input type="password" minlength="8" maxlength="15" class="form-control" id="Password" name="Password">
                             <div id="Password" class="form-text">Establece una contraseña segura.</div>
                         </div>
                         <!-- Sexo -->

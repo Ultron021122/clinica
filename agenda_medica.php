@@ -21,6 +21,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Noto+Sans:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <script src="https://kit.fontawesome.com/fec945242f.js" crossorigin="anonymous"></script>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -38,7 +41,7 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 displayEventTime: false,
                 themeSystem: 'bootstrap5',
-                locale: 'es',
+                // locale: 'es',
                 initialView: 'dayGridMonth',
                 headerToolbar: {
                     left: 'prev,next today',
@@ -133,8 +136,12 @@
     </header>
 
     <!-- <h3 class="text-center">Agenda médica</h3> -->
-    <div class="container-xxl mt-6 mb-5">
+    <div class="container mt-6 mb-5">
         <div class="col-12" id='calendar'></div>
+        <!-- Imprimir Agenda -->
+        <div class="d-flex justify-content-end">
+            <a href="<?php echo 'agenda.php?md='.$_SESSION['id']; ?>" target="_blank" class="btn btn-info"><i class="fa-solid fa-print sizeSimbol me-2"></i> Imprimir Agenda</a>
+        </div>
     </div>
 
     <!-- Footer -->

@@ -1,4 +1,5 @@
 <?php
+    date_default_timezone_set('America/Mexico_City');
 
     class medico extends connection {
         
@@ -82,7 +83,11 @@
         }
 
         public function agenda_medico_usuario($ID) {
-            $sql = "SELECT * FROM medico WHERE ID_user='$ID'";
+            $sql = "SELECT medico.ID AS ID, medico.Nombre AS Nombre, medico.Apellidos AS Apellidos,
+                    medico.Especialidad AS Especialidad, medico.Cedula_medica AS Cedula_medica, citas.ID AS ID_cita,
+                    citas.Fecha AS Fecha, citas.Hora AS Hora, citas.Motivo AS Motivo, citas.Paciente_ID AS ID_paciente, paciente.Nombre AS N_paciente, paciente.Apellidos AS A_paciente
+                    FROM medico INNER JOIN citas ON citas.Medico_ID= medico.ID INNER JOIN paciente ON paciente.ID = citas.Paciente_ID
+                        WHERE medico.ID_user='$ID' AND citas.Fecha >= CURDATE();";
             $result = $this->_db->query($sql);
             if ($result) {
                 return $result->fetch_all(MYSQLI_ASSOC);

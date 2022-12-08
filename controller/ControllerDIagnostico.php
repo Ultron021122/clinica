@@ -16,7 +16,7 @@
         }
 
         public function select_diagnostico($ID_expediente) {
-            $sql = "SELECT diagnostico.ID AS ID_diagnostico, DATE_FORMAT(diagnostico.FechaTiempo_diagnostico, '%d/%m/%Y/ - %H:%i:%s %p') AS FechaD,
+            $sql = "SELECT diagnostico.ID AS ID_diagnostico, DATE_FORMAT(diagnostico.FechaTiempo_diagnostico, '%d/%m/%Y - %H:%i:%s %p') AS FechaD,
                     diagnostico.Medicacion AS Medicacion, diagnostico.Observaciones AS Observaciones, diagnostico.Examen_fisico AS Examen_fisico,
                     diagnostico.ID_medico AS MedicoID, medico.Nombre AS Nombre, medico.Apellidos AS Apellidos, diagnostico.ID_expediente AS ID_expediente,
                     medico.Especialidad AS Especialidad FROM diagnostico INNER JOIN medico ON diagnostico.ID_medico = medico.ID WHERE diagnostico.ID_expediente=$ID_expediente;";

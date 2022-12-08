@@ -112,7 +112,7 @@
                 </div>
             </div>
         </nav>
-        <div class="cover d-flex justify-content-end align-items-start p-5 flex-column" style="background-image: url(resource/img/img-8.jpg);">
+        <div class="cover d-flex justify-content-end align-items-start p-5 flex-column" style="background-image: url(resource/img/img-10.jpg);">
             <h1>Mostrar medicos</h1>
             <p>El mejor trabajo del mundo.</p>
             <form action="form_medico.php">
