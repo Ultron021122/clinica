@@ -152,12 +152,11 @@
                             </div>
                             <!-- tabla de datos -->
                             <div class="row g-0 px-3">
-                                <table class="table caption-top table-bordered table-hover">
-                                    <caption style="text-align: center; color: #3678b3;"><h3>Datos del paciente</h3></caption>
+                                <table class="table table-bordered table-hover">
+                                    <!-- <caption style="text-align: center; color: #3678b3;"></caption> -->
                                     <thead class="text-center">
                                         <tr>
-                                            <th scope="col">Campos</th>
-                                            <th scope="col">Valores actuales</th>
+                                            <th scope="col" colspan="2"><h3 style="text-align: center; color: #3678b3;">Datos del paciente</h3></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -243,7 +242,7 @@
                                                             <hr style="margin: 0.5rem 0;">
                                                             <p class="card-text"><?php echo $diag['Medicacion']; ?></p>
                                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                                <button type="button" class="btn btn-primary"><i class="fa-solid fa-print sizeSimbol"></i></button>
+                                                                <a href="<?php echo 'diagnostico.php?nd='.$ID_diag; ?>" target="_blank" class="btn btn-primary"><i class="fa-solid fa-print sizeSimbol"></i></a>
                                                                 <?php echo "<button type='button' class='btn btn-info' onclick='editar($ID_diag)'><i class='fa-solid fa-pen-to-square sizeSimbol'></i></button>";?>
                                                                 <?php echo "<button type='button' class='btn btn-danger' onclick='eliminar($ID_diag, $id_expediente)'><i class='fa-solid fa-delete-left sizeSimbol'></i></button>";?>
                                                             </div>
@@ -259,10 +258,12 @@
                                 <?php
                                 } else {
                                 ?>
-                                    <div class="alert alert-primary d-flex align-items-center" role="alert">
-                                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
-                                        <div>
-                                        No se encuentran diagnósticos registrados en la base de datos.
+                                    <div class="row mb-5" id="card-diagnostico">
+                                        <div class="alert alert-primary d-flex align-items-center" role="alert">
+                                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+                                            <div>
+                                            No se encuentran diagnósticos registrados en la base de datos.
+                                            </div>
                                         </div>
                                     </div>
                                 <?php
@@ -276,13 +277,6 @@
         <?php
             }
         ?>
-    </section>
-
-    <!-- Diagnostic Content -->
-    <section>
-        <div class="container mt-1 mb-5">
-            
-        </div>
     </section>
 
     <!-- Footer -->

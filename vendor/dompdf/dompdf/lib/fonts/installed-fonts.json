@@ -1,0 +1,9 @@
+{
+    "fjalla one": {
+        "normal": "fjalla_one_normal_419cb7c9a1dc1d766b0b76c0499bc2b6"
+    },
+    "noto sans": {
+        "300": "C:\\xampp\\htdocs\\clinica\\vendor\\dompdf\\dompdf\/lib\/fonts\/noto_sans_300_dc576f1f728ccf8d0e6bea69a037faf6",
+        "normal": "noto_sans_normal_962db05b75cb4a7f19e1d9d224a27992"
+    }
+}

@@ -86,7 +86,7 @@
         }
 
         public function mostrar_citas_medico($ID) {
-            $sql = "SELECT * FROM citas WHERE Medico_ID = '$ID'";
+            $sql = "SELECT citas.ID AS ID, citas.Fecha AS Fecha, TIME_FORMAT(citas.Hora, '%H:%i:%s') AS Hora, citas.Motivo AS Motivo, citas.Medico_ID AS Medico_ID, citas.Paciente_ID AS Paciente_ID, citas.Recepcionista_ID AS Recepcionista_ID FROM citas WHERE Medico_ID = '$ID'";
             $result = $this->_db->query($sql);
             if ($result) {
                 return $result->fetch_all(MYSQLI_ASSOC);

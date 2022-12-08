@@ -38,7 +38,7 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 displayEventTime: false,
                 themeSystem: 'bootstrap5',
-                // locale: 'es',
+                locale: 'es',
                 initialView: 'dayGridMonth',
                 headerToolbar: {
                     left: 'prev,next today',
