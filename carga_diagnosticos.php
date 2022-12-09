@@ -123,7 +123,7 @@
                         </th>
                         <th style="text-align: center; border:none;">
                             <h1 class="title-p">Medical Control System</h1>
-                            <h2>Diagnóstico Médico</h2>
+                            <h2>Expediente Médico</h2>
                             <h4 style="line-height: 0;">UNIVERSIDAD DE GUADALAJARA</h4>
                             <p style="line-height: 1; color:gray;">Blvd. Gral. Marcelino García Barragán 1421, Olímpica, 44430 Guadalajara, Jal.</p>
                         </th>
